@@ -20,12 +20,15 @@ https://github.com/OpenGG/bj-unicom-iptv/issues/4
 
 https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1
 
-# 3.参考播放列表
+# 3.部分参考列表
 
 https://github.com/OpenGG/bj-unicom-iptv
 
 https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820   
 
+https://github.com/sdhzdmzzl/bj-unicom-iptv-scanner
 
+http://epg.51zmt.top:8000/
 
+https://iptvtools.readthedocs.io/en/latest/scripts/iptv-filter.html#example
 
