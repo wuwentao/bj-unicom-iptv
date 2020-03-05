@@ -28,7 +28,7 @@
 
 # 3.局域网观看北京联通IPTV方法
 详情请参考：
-[IPTV中继核心原理](iptv.md)
+[IPTV中继原理](iptv.md)
 
 或参考OpenGG方法：
 [北京联通IPTV的完美方案](https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1)
