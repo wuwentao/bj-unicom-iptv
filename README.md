@@ -28,10 +28,9 @@
 
 # 3.局域网观看北京联通IPTV方法
 北京联通IPTV的完美方案：
-
-https://github.com/OpenGG/bj-unicom-iptv/issues/4
-
 https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1
+
+http://m.newsmth.net/article/DigiHome/833031
 
 # 4.部分参考列表
 
@@ -44,4 +43,6 @@ https://github.com/sdhzdmzzl/bj-unicom-iptv-scanner
 http://epg.51zmt.top:8000/
 
 https://iptvtools.readthedocs.io/en/latest/scripts/iptv-filter.html#example
+
+http://m.newsmth.net/article/DigiHome/833031
 
