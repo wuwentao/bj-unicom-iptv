@@ -108,7 +108,21 @@ ubuntu@raspberrypi:~$
    ![Merlin路由器固件开启IGMP Proxy/Snooping + UDPxy同时开启：](resource/merlin.jpg)
 
 
-# 4. 获取IPTV播放列表部分方法
+# 4. 手工添加多播路由播放视频
+
+- 光猫默认开启了IGMP, 可无视此条
+- 光猫未绑定任意IPTV，或者在绑定了IPTV接口的路由器下配置路由至该IPTV源接口
+- 登录下挂IPTV源接口的路由器，确认路由器WAN口的物理接口，例如Merlin是eth0, 树莓派连接光猫wifi使用wlan0接口
+- 在路由器（或树莓派）手工添加路由： ip route add  239.0.0.0/8 dev eth0
+    > - 239.0.0.0/8网段为IPTV m3u播放列表中网段
+    > - eth0为当前路由器WAN口物理接口，非上层ppp0接口，默认路由器会指向ppp0
+- 路由器下挂的PC机，使用播放器播放m3u列表，频道列表里内容直接是rtp://239.3.1.x:yyy，无需udpxy
+- 该功能来源：[huxuan](https://github.com/wuwentao/bj-unicom-iptv/issues/1)
+    需继续测试，当前尚未完全验证，发现的部分问题：
+    - 视频播放比udpxy时出现卡顿
+    - MacOS可能无法发出这种多播地址段的报文，可能防火墙或者播放器问题（需进一步验证）
+
+# 5. 获取IPTV播放列表部分方法
 
 欢迎补充
 
@@ -118,7 +132,17 @@ ubuntu@raspberrypi:~$
 3. 电脑开热点共享， IPTV机顶盒连接电脑共享的WIFI热点
 4. IPTV机顶盒重启，机顶盒会发出获取频道列表的请求
 5. wireshark获取到频道列表，转换成m3u格式
+(方法来源：[OpenGG](https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1))
 
 **方法B**:
 1. 通过电脑或者树莓派或者其他任意网络设备连接光猫IPTV源端口
 2. 使用UDP协议连接(扫描)某个固定网段(例如：239.3.1.x或类似地址段)和某些特定的服务端口（例如：8001，1234，9000等），端口可连接成功则是正在提供IPTV服务的IP和端口
+(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/bj-unicom-iptv-scanner)
+
+**方法C**:
+1. 通过电脑或者树莓派或任意网络设备连接光猫IPTV源端口
+2. 将连接光猫IPTV源端口的interface加入某个节目源的多播地址
+3. 在该接口上开启抓包，即可抓取到对应多播地址和开放并提供服务端口的UDP数据包
+4. 使用RTP协议连接该多播IP地址和解析出的端口号，即可播放频道节目
+(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/iptv_channel_scanner_windows)
+
