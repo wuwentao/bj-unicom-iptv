@@ -119,8 +119,8 @@ ubuntu@raspberrypi:~$
 - 路由器下挂的PC机，使用播放器播放m3u列表，频道列表里内容直接是`rtp://239.3.1.x:yyy`，无需`udpxy`
 - 该功能来源：[huxuan](https://github.com/wuwentao/bj-unicom-iptv/issues/1)
     需继续测试，当前尚未完全验证，发现的部分问题：
-    - 视频播放比`udpxy`时出现卡顿
-    - MacOS可能无法发出这种多播地址段的报文，可能防火墙或者播放器问题（需进一步验证）
+    - 视频播放时比`udpxy`出现卡顿
+    - 部分MacOS可能无法播放或发出这种多播地址段的报文，可能OS防火墙问题
 
 # 5. 获取IPTV播放列表部分方法
 
@@ -139,7 +139,7 @@ ubuntu@raspberrypi:~$
 1. 通过电脑或者树莓派或者其他任意网络设备连接光猫IPTV源端口
 2. 使用UDP协议连接(扫描)某个固定网段(例如：239.3.1.x或类似地址段)和某些特定的服务端口（例如：8001，1234，9000等），端口可连接成功则是正在提供IPTV服务的IP和端口
 
-(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/bj-unicom-iptv-scanner)
+(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/bj-unicom-iptv-scanner) )
 
 **方法C**:
 1. 通过电脑或者树莓派或任意网络设备连接光猫IPTV源端口
@@ -147,5 +147,5 @@ ubuntu@raspberrypi:~$
 3. 在该接口上开启抓包，即可抓取到对应多播地址和开放并提供服务端口的UDP数据包
 4. 使用RTP协议连接该多播IP地址和解析出的端口号，即可播放频道节目
 
-(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/iptv_channel_scanner_windows)
+(方法来源：[sdhzdmzzl](https://github.com/sdhzdmzzl/iptv_channel_scanner_windows) )
 
