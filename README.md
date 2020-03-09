@@ -1,5 +1,10 @@
 # 1.北京联通IPTV播放列表
 
+## 节目源来源:
+[北京联通IPTV列表](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)
+
+Author: [sdhzdmzzl](https://github.com/sdhzdmzzl) 
+
 ## 节目源维护：
 节目源失效，新增，变化，可提交[issue](https://github.com/wuwentao/bj-unicom-iptv/issues/new)反馈变化
 或提交merge request,共同维护与更新准确的节目源列表
@@ -34,15 +39,28 @@
 [北京联通IPTV的完美方案](https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1)
 
 # 4.部分参考列表
+
 [OpenGG联通IPTV列表（已停止更新）](https://github.com/OpenGG/bj-unicom-iptv)
+
 [sdhzdmzzl北京联通IPTV m3u列表(更新中)](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)   
+
 [EPG台标](http://epg.51zmt.top:8000/)
+
 [iptvtools生成EPG台标m3u](https://github.com/huxuan/iptvtools)
+
 [北京电信IPTV播放列表](http://m.newsmth.net/article/DigiHome/833031)
+
 [Throwing Star LAN Tap](https://greatscottgadgets.com/throwingstar/)
+
 [IPTV直播源抓包教程，DIY Throwing Star Lan Tap](https://www.znds.com/tv-1137126-1-1.html)
+
 [5毛钱打造自己的Throwing Star LAN Tap](https://www.freebuf.com/articles/89552.html)
+
 [Udp、Rtp协议头配图解析](https://blog.csdn.net/nihenbuhao/article/details/60585079)
+
 [Huawei组播原理及IPTV组网介绍](https://wenku.baidu.com/view/6e40036d011ca300a6c39072.html)
+
 [IGMP基础](https://cshihong.github.io/2018/02/12/IGMP%E5%9F%BA%E7%A1%80/)
+
 [组播IP地址到底是谁的IP](https://www.zhihu.com/question/27233903)
+
