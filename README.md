@@ -23,6 +23,18 @@ Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 * 无标识则为***标清***
 * 重命名部分频道名称以及错误频道名称
 * 验证所有节目源并核对节目名称有效 @2020.03.04
+* 增加台标 @2021.10.26
+* 增加EPG电子节目单 @2021.10.26
+* 二次分组分类，增加
+  -  [高清]央视
+  -  [高清]卫视
+  -  [高清]北京
+  -  [高清]北京IPTV
+  -  *少儿*
+  -  央视
+  -  卫视
+  -  北京
+  -  北京IPTV
 
 > - 部分小众频道可能在北京不同的区域会有所区别，例如:  ***朝阳，密云，房山***
 > - MacOS 上使用***IINA***播放器，会有小部分节目源出现闪退，偶尔能播放，但使用***VLC/MPV***则播放正常
@@ -64,3 +76,6 @@ Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 
 [组播IP地址到底是谁的IP](https://www.zhihu.com/question/27233903)
 
+# 5. 北京移动IPTV播放列表：
+
+https://github.com/wuwentao/bj-mobile-iptv
