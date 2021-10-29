@@ -35,6 +35,8 @@ rtp://239.3.1.124:8128
 rtp://239.3.1.65:8132
 #EXTINF:-1 tvg-id="16" tvg-name="CCTV15" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV15.png" group-title="[高清]央视",CCTV-15音乐[高清]
 rtp://239.3.1.153:8136
+#EXTINF:-1 tvg-id="22" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="[高清]央视",CCTV-16[4K]
+rtp://239.3.1.97:8001
 #EXTINF:-1 tvg-id="17" tvg-name="CCTV17" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV17.png" group-title="[高清]央视",CCTV-17农业农村[高清]
 rtp://239.3.1.151:8144
 
