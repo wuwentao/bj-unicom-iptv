@@ -35,10 +35,14 @@ rtp://239.3.1.124:8128
 rtp://239.3.1.65:8132
 #EXTINF:-1 tvg-id="16" tvg-name="CCTV15" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV15.png" group-title="[高清]央视",CCTV-15音乐[高清]
 rtp://239.3.1.153:8136
-#EXTINF:-1 tvg-id="22" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="[高清]央视",CCTV-16奥林匹克频道[4K]
-rtp://239.3.1.97:8001
+#EXTINF:-1 tvg-id="22" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="[高清]央视",CCTV-16奥林匹克频道[高清]
+rtp://239.3.1.184:8001
 #EXTINF:-1 tvg-id="17" tvg-name="CCTV17" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV17.png" group-title="[高清]央视",CCTV-17农业农村[高清]
 rtp://239.3.1.151:8144
+#EXTINF:-1 tvg-id="22" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="4K",CCTV-16奥林匹克频道[4K]1
+rtp://239.3.1.97:8001
+#EXTINF:-1 tvg-id="22" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="4K",CCTV-16奥林匹克频道[4K]2
+rtp://239.3.1.183:8001
 
 #EXTINF:-1 tvg-id="23" tvg-name="湖南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hunan.png" group-title="[高清]卫视",湖南卫视[高清]
 rtp://239.3.1.132:8012
@@ -74,6 +78,8 @@ rtp://239.3.1.148:8072
 rtp://239.3.1.122:8160
 #EXTINF:-1 tvg-id="44" tvg-name="江西卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jiangxi.png" group-title="[高清]卫视",江西卫视[高清]
 rtp://239.3.1.123:8164
+#EXTINF:-1 tvg-id="44" tvg-name="吉林卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jilin.png" group-title="[高清]卫视",吉林卫视[高清]
+rtp://239.3.1.240:8172
 
 #EXTINF:-1 tvg-id="30" tvg-name="北京卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijing.png" group-title="[高清]北京;[高清]卫视",BRTV北京卫视[高清]
 rtp://239.3.1.241:8000
@@ -93,10 +99,12 @@ rtp://239.3.1.163:8001
 rtp://239.3.1.154:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",房山电视台[高清]
 rtp://239.3.1.96:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",通州融媒[高清]
+rtp://239.3.1.221:8001
 
-#EXTINF:-1 tvg-id="184" tvg-name="爱上4K" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/aishang4k.png" group-title="[高清]北京IPTV",爱上4K[4K]
+#EXTINF:-1 tvg-id="184" tvg-name="爱上4K" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/aishang4k.png" group-title="[高清]北京IPTV;4K",爱上4K[4K]
 rtp://239.3.1.236:2000
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",北京IPTV 4K超清[4K]
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV;4K",北京IPTV 4K超清[4K]
 rtp://239.3.1.249:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",北京IPTV淘精彩[高清]
 rtp://239.3.1.178:8001
@@ -128,14 +136,20 @@ rtp://239.3.1.113:8001
 rtp://239.3.1.114:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",聚鲨环球精选[高清]
 rtp://239.3.1.179:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",聚鲨北京[高清]
-rtp://239.3.1.180:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",聚鲨健康[高清]
-rtp://239.3.1.181:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",聚鲨生活[高清]
-rtp://239.3.1.182:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",聚鲨国际[高清]
 rtp://239.3.1.183:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",央广购物[高清]1
+rtp://239.3.1.222:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",央广购物[高清]2
+rtp://239.3.1.223:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",优购物[高清]
+rtp://239.3.1.180:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",时尚购物[高清]
+rtp://239.3.1.181:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",东方购物[高清]
+rtp://239.3.1.182:8001
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",家有购物[高清]
+rtp://239.3.1.185:8001
 #EXTINF:-1 tvg-id="226" tvg-name="金鹰纪实" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jinyingjishi.png" group-title="[高清]北京IPTV",金鹰纪实[高清]
 rtp://239.3.1.58:8156
 #EXTINF:-1 tvg-id="115" tvg-name="快乐垂钓" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/KUAILECHUIDIAO.jpg" group-title="[高清]北京IPTV,快乐垂钓[高清]
@@ -193,28 +207,27 @@ rtp://239.3.1.15:8052
 #EXTINF:-1 tvg-id="17" tvg-name="CCTV17" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV17.png" group-title="央视",CCTV-17农业农村
 rtp://239.3.1.150:8064
 
-
-#EXTINF:-1 tvg-id="30" tvg-name="北京卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijing.png" group-title="卫视;北京",BTV北京卫视
+#EXTINF:-1 tvg-id="30" tvg-name="北京卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijing.png" group-title="卫视;北京",BRTV北京卫视
 rtp://239.3.1.225:8000
-#EXTINF:-1 tvg-id="1873" tvg-name="BTV文艺" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV文艺.png" group-title="北京",BTV文艺
+#EXTINF:-1 tvg-id="1873" tvg-name="BTV文艺" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV文艺.png" group-title="北京",BRTV文艺
 rtp://239.3.1.226:8000
-#EXTINF:-1 tvg-id="1874" tvg-name="BTV科教" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV科教.png" group-title="北京",BTV科教
+#EXTINF:-1 tvg-id="1874" tvg-name="BTV科教" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV科教.png" group-title="北京",BRTV科教
 rtp://239.3.1.227:8000
-#EXTINF:-1 tvg-id="1875" tvg-name="BTV影视" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV影视.png" group-title="北京",BTV影视
+#EXTINF:-1 tvg-id="1875" tvg-name="BTV影视" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV影视.png" group-title="北京",BRTV影视
 rtp://239.3.1.228:8000
-#EXTINF:-1 tvg-id="1876" tvg-name="BTV财经" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV财经.png" group-title="北京",BTV财经
+#EXTINF:-1 tvg-id="1876" tvg-name="BTV财经" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV财经.png" group-title="北京",BRTV财经
 rtp://239.3.1.229:8000
-#EXTINF:-1 tvg-id="1872" tvg-name="北京纪实" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijingjishi.png" group-title="北京",BTV冬奥纪实
+#EXTINF:-1 tvg-id="1872" tvg-name="北京纪实" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijingjishi.png" group-title="北京",BRTV冬奥纪实
 rtp://239.3.1.230:8000
-#EXTINF:-1 tvg-id="1878" tvg-name="BTV生活" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV生活.png" group-title="北京",BTV生活
+#EXTINF:-1 tvg-id="1878" tvg-name="BTV生活" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV生活.png" group-title="北京",BRTV生活
 rtp://239.3.1.231:8000
-#EXTINF:-1 tvg-id="1879" tvg-name="BTV青年" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV青年.png" group-title="北京",BTV青年
+#EXTINF:-1 tvg-id="1879" tvg-name="BTV青年" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV青年.png" group-title="北京",BRTV青年
 rtp://239.3.1.232:8000
-#EXTINF:-1 tvg-id="1880" tvg-name="BTV新闻" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV新闻.png" group-title="北京",BTV新闻
+#EXTINF:-1 tvg-id="1880" tvg-name="BTV新闻" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV新闻.png" group-title="北京",BRTV新闻
 rtp://239.3.1.233:8000
-#EXTINF:-1 tvg-id="67" tvg-name="卡酷动画" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/kaku.png" group-title="北京;少儿",BTV卡酷少儿
+#EXTINF:-1 tvg-id="67" tvg-name="卡酷动画" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/kaku.png" group-title="北京;少儿",BRTV卡酷少儿
 rtp://239.3.1.234:8000
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京",BTV国际频道
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京",BRTV国际频道
 rtp://239.3.1.235:8000
 
 #EXTINF:-1 tvg-id="31" tvg-name="东方卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/dongfang.png" group-title="卫视",东方卫视
@@ -372,10 +385,8 @@ rtp://239.3.1.89:4120
 rtp://239.3.1.94:4120
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京IPTV",爱生活
 rtp://239.3.1.86:4120
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京IPTV",聚鲨环球精选
-rtp://239.3.1.184:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京IPTV",聚鲨北京
-rtp://239.3.1.185:8001
+
+
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京IPTV",聚鲨健康
 rtp://239.3.1.186:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京IPTV",聚鲨生活
