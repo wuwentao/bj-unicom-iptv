@@ -39,18 +39,31 @@ Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 > - 部分小众频道可能在北京不同的区域会有所区别，例如:  ***朝阳，密云，房山***
 > - MacOS 上使用***IINA***播放器，会有小部分节目源出现闪退，偶尔能播放，但使用***VLC/MPV***则播放正常
 
-# 2. 在路由器上使用udpxy组播转单播
+# 北京联通IPTV播放列表
+
+https://github.com/wuwentao/bj-unicom-iptv
+
+# 北京电信IPTV播放列表
+
+https://github.com/wuwentao/bj-telecom-iptv
+
+# 北京移动IPTV播放列表
+
+https://github.com/wuwentao/bj-mobile-iptv
+
+
+# 在路由器上使用udpxy组播转单播
 直接下载[bj-unicom-iptv.m3u](bj-unicom-iptv.m3u)播放列表文件，本地打开文件，查找关键字 `rtp://`，并全部替换为: `http://192.168.2.1:8012/rtp/` 即可使用使用PC播放器播放或者导入电视盒子
 >其中***192.168.2.1:8012***为局域网udpxy的IP和端口
 
-# 3.局域网观看北京联通IPTV方法
+# 局域网观看北京联通IPTV方法
 详情请参考：
 [IPTV中继原理](iptv.md)
 
 或参考OpenGG方法：
 [北京联通IPTV的完美方案](https://exp.newsmth.net/topic/357dabb5a4dc6d5c4c75f96a30209cd9/1)
 
-# 4.部分参考列表
+# 参考列表
 
 [OpenGG联通IPTV列表（已停止更新）](https://github.com/OpenGG/bj-unicom-iptv)
 
@@ -76,6 +89,3 @@ Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 
 [组播IP地址到底是谁的IP](https://www.zhihu.com/question/27233903)
 
-# 5. 北京移动IPTV播放列表：
-
-https://github.com/wuwentao/bj-mobile-iptv
