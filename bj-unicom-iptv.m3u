@@ -91,8 +91,6 @@ rtp://239.3.1.242:8000
 rtp://239.3.1.158:8000
 #EXTINF:-1 tvg-id="67" tvg-name="卡酷动画" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/kaku.png" group-title="[高清]北京;少儿",BRTV卡酷动画[高清]
 rtp://239.3.1.189:8000
-#EXTINF:-1 tvg-id="1872" tvg-name="北京纪实" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/beijingjishi.png" group-title="[高清]北京",BRTV冬奥纪实[高清]
-rtp://239.3.1.243:8000
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",朝阳电视台[高清]
 rtp://239.3.1.163:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",密云电视台[高清]
@@ -124,8 +122,6 @@ rtp://239.3.1.251:8001
 rtp://239.3.1.157:8176
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",电影台[高清]
 rtp://239.3.1.97:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",熊猫频道[高清]
-rtp://239.3.1.66:8068
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",每日影院[高清]
 rtp://239.3.1.111:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",幸福剧场[高清]
