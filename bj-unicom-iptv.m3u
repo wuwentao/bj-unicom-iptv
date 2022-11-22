@@ -39,10 +39,6 @@ rtp://239.3.1.153:8136
 rtp://239.3.1.184:8001
 #EXTINF:-1 tvg-id="17" tvg-name="CCTV17" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV17.png" group-title="[高清]央视",CCTV-17农业农村[高清]
 rtp://239.3.1.151:8144
-#EXTINF:-1 tvg-id="7249" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="4K",CCTV-16奥林匹克频道[4K]1
-rtp://239.3.1.97:8001
-#EXTINF:-1 tvg-id="7249" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="4K",CCTV-16奥林匹克频道[4K]2
-rtp://239.3.1.183:8001
 
 #EXTINF:-1 tvg-id="27" tvg-name="湖南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hunan.png" group-title="[高清]卫视",湖南卫视[高清]
 rtp://239.3.1.132:8012
@@ -146,6 +142,8 @@ rtp://239.3.1.181:8001
 rtp://239.3.1.182:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",家有购物[高清]
 rtp://239.3.1.185:8001
+#EXTINF:-1 tvg-id="7249" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="高清",家有购物[高清]
+rtp://239.3.1.97:8001
 #EXTINF:-1 tvg-id="2025" tvg-name="金鹰纪实" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/jinyingjishi.png" group-title="[高清]北京IPTV",金鹰纪实[高清]
 rtp://239.3.1.58:8156
 #EXTINF:-1 tvg-id="6595" tvg-name="快乐垂钓" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/KUAILECHUIDIAO.jpg" group-title="[高清]北京IPTV,快乐垂钓[高清]
