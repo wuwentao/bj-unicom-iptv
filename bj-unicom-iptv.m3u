@@ -85,6 +85,8 @@ rtp://239.3.1.159:8000
 rtp://239.3.1.242:8000
 #EXTINF:-1 tvg-id="1875" tvg-name="BTV影视" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV影视.png" group-title="[高清]北京",BRTV影视[高清]
 rtp://239.3.1.158:8000
+#EXTINF:-1 tvg-id=""  tvg-name="BTRV体育休闲"  group-title="[高清]北京",BRTV体育休闲[高清]
+rtp://239.3.1.243:8000
 #EXTINF:-1 tvg-id="67" tvg-name="卡酷动画" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/kaku.png" group-title="[高清]北京;少儿",BRTV卡酷动画[高清]
 rtp://239.3.1.189:8000
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",朝阳电视台[高清]
