@@ -85,13 +85,13 @@ rtp://239.3.1.159:8000
 rtp://239.3.1.242:8000
 #EXTINF:-1 tvg-id="1875" tvg-name="BTV影视" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV影视.png" group-title="[高清]北京",BRTV影视[高清]
 rtp://239.3.1.158:8000
-#EXTINF:-1 tvg-id=""  tvg-name="BTRV体育休闲"  group-title="[高清]北京",BRTV体育休闲[高清]
+#EXTINF:-1 tvg-id="1877"  tvg-name="BTRV体育休闲"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV体育.png" group-title="[高清]北京",BRTV体育休闲[高清]
 rtp://239.3.1.243:8000
-#EXTINF:-1 tvg-id=""  tvg-name="BRTV纪实科教"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV科教.png"  group-title="[高清]北京",BRTV纪实科教[高清]
+#EXTINF:-1 tvg-id="1872"  tvg-name="BRTV纪实科教"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV科教.png"  group-title="[高清]北京",BRTV纪实科教[高清]
 rtp://239.3.1.115:8000
-#EXTINF:-1 tvg-id=""  tvg-name="BRTV财经"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV财经.png"  group-title="[高清]北京",BRTV财经[高清]
+#EXTINF:-1 tvg-id="1876"  tvg-name="BRTV财经"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV财经.png"  group-title="[高清]北京",BRTV财经[高清]
 rtp://239.3.1.116:8000
-#EXTINF:-1  tvg-id=""  tvg-name="BRTV生活"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV生活.png"  group-title="[高清]北京",BrTV生活[高清]
+#EXTINF:-1  tvg-id="1878"  tvg-name="BRTV生活"  tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV生活.png"  group-title="[高清]北京",BRTV生活[高清]
 rtp://239.3.1.117:8000
 
 #EXTINF:-1 tvg-id="67" tvg-name="卡酷动画" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/kaku.png" group-title="[高清]北京;少儿",BRTV卡酷动画[高清]
