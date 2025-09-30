@@ -3,23 +3,25 @@
 ## 节目源来源:
 [北京联通IPTV列表](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)
 
-Author: [sdhzdmzzl](https://github.com/sdhzdmzzl) 
+Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 
 ## 节目源维护：
 节目源失效，新增，变化，可提交[issue](https://github.com/wuwentao/bj-unicom-iptv/issues/new)反馈变化
 或提交merge request,共同维护与更新准确的节目源列表
 
 ## 节目源统计：
-***合计***：   165个
-- 高清： 54个
-- 4K:    2个
-- 标清： 109个
+***合计***：   213个
+- 高清： 116个
+- 4K:    13个
+- 标清：  25个
 
 ## 主要修改
 * 重排序所有节目频道，按***画质+分类***排列
+* 节目源标题增加IPTV遥控器中频道编号
 * 节目源标题增加关键字来排序并区分节目源
 * 标识***高清***为1080p
 * 标识***4K***为4K
+* 标识***标清***为传统4:3节目源，分辨率为720*576
 * 无标识则为***标清***
 * 重命名部分频道名称以及错误频道名称
 * 验证所有节目源并核对节目名称有效 @2020.03.04
@@ -67,7 +69,7 @@ https://github.com/wuwentao/bj-mobile-iptv
 
 [OpenGG联通IPTV列表（已停止更新）](https://github.com/OpenGG/bj-unicom-iptv)
 
-[sdhzdmzzl北京联通IPTV m3u列表(更新中)](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)   
+[sdhzdmzzl北京联通IPTV m3u列表(更新中)](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)
 
 [EPG台标](http://epg.51zmt.top:8000/)
 
@@ -88,4 +90,3 @@ https://github.com/wuwentao/bj-mobile-iptv
 [IGMP基础](https://cshihong.github.io/2018/02/12/IGMP%E5%9F%BA%E7%A1%80/)
 
 [组播IP地址到底是谁的IP](https://www.zhihu.com/question/27233903)
-
