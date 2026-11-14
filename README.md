@@ -9,10 +9,13 @@ Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
 节目源失效，新增，变化，可提交[issue](https://github.com/wuwentao/bj-unicom-iptv/issues/new)反馈变化
 或提交merge request,共同维护与更新准确的节目源列表
 
+- 频道有效性验证脚本：[check_iptv_m3u.sh](check_iptv_m3u.sh)，在北京联通局域网内用 ffmpeg/ffprobe 逐个探测频道、截图并生成报告（需先把 `rtp://` 转成 udpxy 的 `http://` 地址，依赖 `ffmpeg jq bc`）
+- 面向 AI 编码助手（Claude Code / Codex / Copilot / Cursor / Gemini CLI 等）的维护指南：[AGENTS.md](AGENTS.md)
+
 ## 节目源统计：
-***合计***：   213个
-- 高清： 116个
-- 4K:    13个
+***合计***：   158个
+- 高清： 117个
+- 4K:    16个
 - 标清：  25个
 
 ## 主要修改
