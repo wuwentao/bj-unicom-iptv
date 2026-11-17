@@ -46,7 +46,13 @@ run_to() { local t=$1; shift; "$@" & local p=$!; ( sleep "$t"; kill -9 "$p" 2>/d
 safe_name() { printf '%s' "$1" | tr '/ :' '___' | tr -d '\t\r\n'; }
 
 # 确定性分类：输入 width height pix_fmt profile transfer primaries field_order
-# 输出(制表符分隔)：画质  动态范围  扫描  位深
+# 输出(制表符分隔)：画质  动态范围  扫描  位深  建议标识
+#
+# 动态范围定义（以位深为准，不看“标签”真伪）：
+#   - 4K/HDR 需要 10bit + HLG(arib-std-b67)/PQ(smpte2084)/bt2020-10 曲线
+#   - 8bit 即使带 bt2020/HLG 标签也只能呈现 SDR（标签与实际能力不符，会另注）
+#   - 其余为 SDR
+# 建议标识（用于 m3u 显示名后缀）：4K HDR / 4K SDR / 1080p / 1080i / 标清 等
 classify() {
   local w="$1" h="$2" pf="$3" prof="$4" tr="$5" prim="$6" fo="$7"
   # 位深：pix_fmt 带 10/12 则为 10/12bit，否则 8bit
@@ -57,24 +63,44 @@ classify() {
   if [ "$w" = "1920" ] && [ "$h" = "1080" ]; then q="高清"
   elif [ "$w" = "3840" ] && [ "$h" = "2160" ]; then q="4K"
   elif [ "$w" = "720" ] && { [ "$h" = "576" ] || [ "$h" = "560" ]; }; then q="标清"; fi
-  # 动态范围 + 真伪 HDR（关键：HLG/PQ 必须 >=10bit 才是真 HDR）
-  local dr
+  # 动态范围（SDR / HDR，以位深为准）
+  local dr is_hdr=0
   case "$tr" in
-    arib-std-b67) if [ "$bits" -ge 10 ]; then dr="真HDR-HLG(${bits}bit)"; else dr="假HDR-HLG(8bit·仅标签)"; fi ;;
-    smpte2084)    if [ "$bits" -ge 10 ]; then dr="真HDR10(${bits}bit)";   else dr="假HDR10(8bit·仅标签)";   fi ;;
-    bt709)        dr="SDR(bt709·${bits}bit)" ;;
-    ""|unknown|-) dr="SDR(未标注·${bits}bit)" ;;
-    *)            dr="未知(transfer=${tr}·${bits}bit)" ;;
+    arib-std-b67|smpte2084|bt2020-10|bt2020-12)
+      if [ "$bits" -ge 10 ]; then is_hdr=1; fi ;;
+    reserved) # ffprobe 未映射，但若 10bit+bt2020 基本可判为 HDR
+      if [ "$bits" -ge 10 ] && printf '%s' "$prim" | grep -q bt2020; then is_hdr=1; fi ;;
   esac
+  if [ "$is_hdr" = "1" ]; then
+    dr="HDR(${bits}bit·${tr})"
+  else
+    case "$tr" in
+      arib-std-b67|smpte2084|bt2020*) dr="SDR(${bits}bit·带${tr}标签但非10bit)" ;;
+      bt709)                          dr="SDR(${bits}bit·bt709)" ;;
+      ""|unknown|-)                   dr="SDR(${bits}bit·未标注)" ;;
+      *)                              dr="SDR(${bits}bit·${tr})" ;;
+    esac
+  fi
   # 扫描
-  local scan
+  local scan scode
   case "$fo" in
-    tt|bb|tb|bt)  scan="隔行 1080i/${fo}" ;;
-    progressive)  scan="逐行 p" ;;
-    ""|unknown|-) scan="未知(字段缺失)" ;;
-    *)            scan="${fo}" ;;
+    tt|bb|tb|bt)  scan="隔行(${fo})"; scode="i" ;;
+    progressive)  scan="逐行";       scode="p" ;;
+    ""|unknown|-) scan="未知(字段缺失)"; scode="" ;;
+    *)            scan="${fo}";       scode="" ;;
   esac
-  printf '%s\t%s\t%s\t%s' "$q" "$dr" "$scan" "$bits"
+  # 建议显示名标识
+  local tag
+  if [ "$q" = "4K" ]; then
+    [ "$is_hdr" = "1" ] && tag="4K HDR" || tag="4K SDR"
+  elif [ "$q" = "高清" ]; then
+    case "$scode" in i) tag="1080i";; p) tag="1080p";; *) tag="1080";; esac
+  elif [ "$q" = "标清" ]; then
+    case "$scode" in i) tag="576i";; *) tag="标清";; esac
+  else
+    tag="$q"
+  fi
+  printf '%s\t%s\t%s\t%s\t%s' "$q" "$dr" "$scan" "$bits" "$tag"
 }
 
 [ $# -ge 1 ] || { echo "用法: $0 <组播IP:端口> [更多...]"; exit 2; }
@@ -106,11 +132,12 @@ for addr in "$@"; do
       ([.streams[]?|select(.codec_type=="video")][0]) as $v |
       "\($v.width//"-") \($v.height//"-") \($v.pix_fmt//"-") \(($v.profile//"-")|gsub(" ";"_")) \($v.color_transfer//"-") \($v.color_primaries//"-") \($v.field_order//"-") \($v.codec_name//"-") \($v.level//"-")"')
     acodec="$(printf '%s' "$sj" | jq -r '([.streams[]?|select(.codec_type=="audio")][0]) as $a | "\($a.codec_name//"-") \($a.channels//"-")ch \($a.sample_rate//"-")Hz \(if $a.bit_rate then (($a.bit_rate|tonumber/1000|floor|tostring)+"k") else "-" end)"')"
-    IFS=$'\t' read -r cq cdr cscan cbits < <(classify "$vw" "$vh" "$vpf" "$vprof" "$vtr" "$vprim" "$vfo")
+    IFS=$'\t' read -r cq cdr cscan cbits ctag < <(classify "$vw" "$vh" "$vpf" "$vprof" "$vtr" "$vprim" "$vfo")
+    vres="${vw}x${vh}"
     vsummary="${vcodec} ${vprof//_/ } ${cbits}bit ${vw}x${vh} ${vpf} transfer=${vtr} primaries=${vprim} field=${vfo} level=${vlevel}"
     connect="true"
   else
-    svc="-"; prov="-"; acodec="-"; vsummary="(探测失败/无数据)"; cq="错误"; cdr="错误"; cscan="错误"
+    svc="-"; prov="-"; acodec="-"; vsummary="(探测失败/无数据)"; cq="错误"; cdr="错误"; cscan="错误"; cbits="-"; ctag="错误"; vres="-"
     connect="false"
   fi
 
@@ -139,8 +166,10 @@ for addr in "$@"; do
     echo "| service_name / provider | \`${svc}\` / \`${prov}\` |"
     echo "| 连接 | ${connect} |"
     echo "| 画质 | ${cq} |"
-    echo "| 动态范围(真伪HDR) | ${cdr} |"
+    echo "| 分辨率 | ${vres} |"
+    echo "| 动态范围(SDR/HDR) | ${cdr} |"
     echo "| 扫描方式 | ${cscan} |"
+    echo "| 建议显示名标识 | [${ctag}] |"
     echo "| 视频 | ${vsummary} |"
     echo "| 音频 | ${acodec} |"
     echo "| 截图 | ${shot_rel} |"
@@ -157,10 +186,11 @@ for addr in "$@"; do
     echo
   } >> "$file"
 
-  # 摘要 TSV（供批量汇总生成总表）：key \t addr \t name \t connect \t 画质 \t 动态 \t 扫描 \t 视频 \t 音频 \t service \t provider \t shot
+  # 摘要 TSV（供批量汇总生成总表）：
+  # key \t addr \t name \t connect \t 画质 \t 分辨率 \t 动态 \t 扫描 \t 标识 \t 视频 \t 音频 \t service \t provider \t shot
   if [ -n "$SUMMARY_TSV" ]; then
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
-      "$key" "$addr" "${NAME:-}" "$connect" "$cq" "$cdr" "$cscan" "$vsummary" "$acodec" "$svc" "$prov" "$shot_rel" >> "$SUMMARY_TSV"
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+      "$key" "$addr" "${NAME:-}" "$connect" "$cq" "$vres" "$cdr" "$cscan" "$ctag" "$vsummary" "$acodec" "$svc" "$prov" "$shot_rel" >> "$SUMMARY_TSV"
   fi
   echo "    画质=${cq} 动态=${cdr} 扫描=${cscan} 连接=${connect}  -> channel-probes/${key}.md"
 done

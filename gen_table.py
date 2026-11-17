@@ -1,168 +1,145 @@
 #!/usr/bin/env python3
-# gen_table.py — merge m3u metadata + probe TSV → §4.2 markdown table rows
-# Usage: python3 gen_table.py > /tmp/section42.md
-import re, sys
+"""gen_table.py — 合并 m3u 元数据 + 探测摘要(_all_summary.tsv) → channels.md 的频道数据总表。
 
-M3U   = "bj-unicom-iptv.m3u"
-TSV   = "channel-probes/_m3u_summary.tsv"
-OUT   = "/tmp/section42.md"
-SHOTS = "~/Downloads/iptv-new-channels-screenshots/m3u-channels"
+一张表，按 IPTV 遥控器编号排序（无编号排末尾）。包含既有频道 + 新增/缺失源。
+多源频道（同一频道多个组播源）用“源”列标 1/2 并相邻排列。
+确定性字段来自 iptv_classify，不在此处重新判断。
+"""
+import re
+from collections import defaultdict
 
-# --- parse m3u ---
-channels = []  # list of dicts
-with open(M3U, encoding="utf-8") as f:
-    extinf = None
-    for line in f:
+M3U = "bj-unicom-iptv.m3u"
+TSV = "channel-probes/_all_summary.tsv"
+OUT = "/tmp/channels_table.md"
+
+# —— 人工确认区（来自 IPTV 机顶盒核对 / gist）——
+# 新增/缺失源（不在 m3u 中）的地址 → (确认编号或"", 频道名, 建议group, 源号或"")
+EXTRA = {
+    # gist 评论新增（2026-11 实测）
+    "239.3.1.23:8001":  ("",    "平谷融媒",     "[高清]北京",        ""),   # 与房山/通州等地方台放最后
+    "239.3.1.24:8001":  ("",    "证券服务",     "[高清]北京IPTV",    ""),
+    "239.3.1.25:8001":  ("",    "重温经典",     "[高清]北京IPTV",    ""),
+    "239.3.1.106:8001": ("70",  "CHC动作电影",  "[高清]北京IPTV",    ""),
+    "239.3.1.107:8001": ("",    "求索纪录4K",   "[高清]北京IPTV;4K", ""),
+    "239.3.1.108:8001": ("322", "中国天气",     "[高清]北京IPTV",    ""),
+    "239.3.1.109:8001": ("323", "环球旅游",     "[高清]北京IPTV",    ""),
+    "239.3.1.206:8001": ("",    "CCTV16奥林匹克4K", "[高清]央视;4K", "1"),
+    "239.2.1.206:8000": ("",    "CCTV16奥林匹克4K", "[高清]央视;4K", "2"),
+    # gist 原始列表里但本仓库缺失的
+    "239.3.1.168:8196": ("65",  "兵团卫视",     "[高清]卫视",        ""),
+    "239.3.1.59:8001":  ("",    "门头沟融媒",   "[高清]北京",        ""),   # 地方台，放最后
+    # 多源第二源（源1 已在 m3u 中）
+    "239.3.1.160:8001": ("",    "聚鲨环球精选", "[高清]北京IPTV",    "2"),
+    "239.3.1.190:8001": ("",    "优购物",       "[高清]北京IPTV",    "2"),
+    "239.3.1.191:8001": ("",    "时尚购物",     "[高清]北京IPTV",    "2"),
+}
+
+# m3u 中作为“源1”的地址（与 EXTRA 里对应的“源2”配对）→ 源号 "1"
+SOURCE1 = {
+    "239.3.1.179:8001": "1",  # 聚鲨环球精选 源1
+    "239.3.1.180:8001": "1",  # 优购物 源1
+    "239.3.1.181:8001": "1",  # 时尚购物 源1
+}
+
+# 地方台（排在最后，与平谷/门头沟同区）
+LOCAL_LAST = {"239.3.1.23:8001", "239.3.1.59:8001"}
+
+
+def load_tsv():
+    d = {}
+    for line in open(TSV, encoding="utf-8"):
+        p = line.rstrip("\n").split("\t")
+        if len(p) < 14:
+            p += [""] * (14 - len(p))
+        key, addr, name, connect, q, res, dr, scan, tag, video, audio, svc, prov, shot = p[:14]
+        d[addr] = dict(key=key, connect=connect, quality=q, resolution=res,
+                       dr=dr, scan=scan, tag=tag, video=video, audio=audio,
+                       service=svc, provider=prov, shot=shot)
+    return d
+
+
+def parse_m3u():
+    chans = []
+    ext = None
+    for line in open(M3U, encoding="utf-8"):
         line = line.rstrip("\r\n")
         if line.startswith("#EXTINF"):
-            extinf = line
-        elif line.startswith("rtp://") and extinf:
+            ext = line
+        elif line.startswith("rtp://") and ext:
             addr = line[len("rtp://"):]
-            # parse EXTINF attributes
-            tvg_id    = re.search(r'tvg-id="([^"]*)"',    extinf)
-            tvg_name  = re.search(r'tvg-name="([^"]*)"',  extinf)
-            tvg_logo  = re.search(r'tvg-logo="([^"]*)"',  extinf)
-            group     = re.search(r'group-title="([^"]*)"', extinf)
-            # display name = after last comma
-            disp = extinf.split(",", 1)[-1] if "," in extinf else ""
-            # channel number = last [...] before quality tag
-            nums = re.findall(r'\[(\d+)\]', disp)
+            disp = ext.split(",", 1)[-1] if "," in ext else ""
+            nums = re.findall(r"\[(\d+)\]", disp)
             ch_num = nums[-2] if len(nums) >= 2 else (nums[-1] if nums else "")
-            # quality tag at end
-            qtag = ""
-            for tag in ["[4K]", "[高清]", "[标清]"]:
-                if disp.endswith(tag):
-                    qtag = tag.strip("[]")
-                    break
-            channels.append({
-                "addr":     addr,
-                "tvg_id":   tvg_id.group(1)   if tvg_id   else "",
-                "tvg_name": tvg_name.group(1) if tvg_name else "",
-                "tvg_logo": tvg_logo.group(1) if tvg_logo else "",
-                "group":    group.group(1)    if group    else "",
-                "disp":     disp,
-                "ch_num":   ch_num,
-                "qtag":     qtag,
-            })
-            extinf = None
+            name = re.sub(r"\[\d+\]", "", disp)
+            name = re.sub(r"\[(高清|4K|标清)\]", "", name).strip()
+            g = lambda k: (re.search(rf'{k}="([^"]*)"', ext) or [None, ""])[1] if re.search(rf'{k}="([^"]*)"', ext) else ""
+            chans.append(dict(addr=addr, num=ch_num, name=name,
+                              group=g("group-title"), tvg_id=g("tvg-id"),
+                              tvg_name=g("tvg-name"), tvg_logo=g("tvg-logo"),
+                              extra=False))
+            ext = None
+    return chans
 
-# --- parse TSV ---
-# cols: key addr name connect 画质 动态 扫描 视频 音频 service provider shot
-tsv = {}
-with open(TSV, encoding="utf-8") as f:
-    for line in f:
-        parts = line.rstrip("\r\n").split("\t")
-        if len(parts) < 12:
-            parts += [""] * (12 - len(parts))
-        key = parts[0]
-        tsv[key] = {
-            "connect":  parts[3],
-            "quality":  parts[4],
-            "dr":       parts[5],
-            "scan":     parts[6],
-            "video":    parts[7],
-            "audio":    parts[8],
-            "service":  parts[9],
-            "provider": parts[10],
-            "shot":     parts[11],
-        }
 
-# --- sort by channel number (blank = 9999) ---
-def sort_key(c):
+def short_video(v):
+    m = re.match(r"(\S+)\s+(\S+(?:\s\S+)?)\s+(\d+bit)\s+\d+x\d+\s+\S+\s+transfer=\S+\s+primaries=\S+\s+field=\S+\s+level=(\S+)", v)
+    if not m:
+        return v.split(" ")[0] if v else "-"
+    codec = m.group(1).upper().replace("H264", "H.264").replace("HEVC", "HEVC")
+    prof, bits, lvl = m.group(2), m.group(3), m.group(4)
     try:
-        return int(c["ch_num"])
-    except (ValueError, TypeError):
-        return 9999
+        lv = int(lvl); lvs = f"L{lv//10}.{lv%10}"
+    except ValueError:
+        lvs = f"L{lvl}"
+    return f"{codec} {prof} {bits} {lvs}"
 
-channels.sort(key=sort_key)
 
-# --- emit markdown ---
-header = "| 编号 | 频道名称 | 画质 | 动态范围(真伪HDR) | 扫描/帧率 | 视频编码 | 色彩 range/space/transfer/primaries | 音频 | 组播地址 | 建议 group-title | service_name | provider | tvg-id | tvg-name | tvg-logo | 验证(日期) | 原始数据 |"
-sep    = "| --- " * 17 + "|"
+def main():
+    tsv = load_tsv()
+    chans = parse_m3u()
 
-lines = [header, sep]
-for c in channels:
-    ip    = c["addr"].split(":")[0]
-    port  = c["addr"].split(":")[1]
-    key   = f"{ip}_{port}"
-    p     = tsv.get(key, {})
+    # 附加 EXTRA（不在 m3u 的新增/缺失源）
+    for addr, (num, name, group, src) in EXTRA.items():
+        chans.append(dict(addr=addr, num=num, name=name, group=group,
+                          tvg_id="", tvg_name="", tvg_logo="", extra=True, src=src))
 
-    # extract colour tuple from video summary string (transfer=X primaries=X)
-    vsumm  = p.get("video", "")
-    tr_m   = re.search(r'transfer=(\S+)', vsumm)
-    pri_m  = re.search(r'primaries=(\S+)', vsumm)
-    rng_m  = re.search(r'yuv\S*', vsumm)
-    sp_m   = re.search(r'bt\d+nc|bt\d+', vsumm)
-    tr     = tr_m.group(1)  if tr_m  else "-"
-    pri    = pri_m.group(1) if pri_m else "-"
+    header = ("| 编号 | 频道名称 | 建议标识 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 "
+              "| 组播地址 | 源 | 现 group-title | service_name | provider | tvg-id | tvg-name | 验证 | 原始数据 |")
+    sep = "| --- " * 17 + "|"
 
-    # derive short video encoding string  e.g. "H.264 High 8bit L4.1"
-    vshort = vsumm
-    codec_m = re.match(r'(\w+)\s+(\S+)\s+(\d+bit)\s+\d+x\d+\s+\S+\s+transfer=\S+\s+primaries=\S+\s+field=\S+\s+level=(\S+)', vsumm)
-    if codec_m:
-        codec = codec_m.group(1).upper()
-        if codec == "H264": codec = "H.264"
-        elif codec == "HEVC": codec = "HEVC"
-        profile = codec_m.group(2)
-        bits    = codec_m.group(3)
-        level   = codec_m.group(4)
-        # format level as e.g. L4.1
+    def sort_key(c):
+        n = c.get("num", "")
+        local = 1 if c["addr"] in LOCAL_LAST else 0
         try:
-            lv = int(level)
-            level_s = f"L{lv//10}.{lv%10}"
+            return (local, int(n))
         except (ValueError, TypeError):
-            level_s = f"L{level}"
-        vshort = f"{codec} {profile} {bits} {level_s}"
-    else:
-        vshort = vsumm.split(" ")[0] if vsumm else "-"
+            return (2 + local, 99999)  # 无编号排最后，地方台更后
 
-    # colour tuple
-    colour_map = {
-        "bt709":    "tv/bt709/bt709/bt709",
-        "bt2020nc": "tv/bt2020nc/…/bt2020",
-        "-":        "未标注",
-    }
-    if tr == "-" or tr == "":
-        colour = "未标注/未标注/未标注/未标注"
-    else:
-        col_range = "tv"
-        col_space = sp_m.group(0) if sp_m else "-"
-        colour = f"{col_range}/{col_space}/{tr}/{pri}"
+    chans.sort(key=sort_key)
 
-    # probe file link
-    probe_link = f"[📄](channel-probes/{key}.md)" if p else ""
+    lines = [header, sep]
+    for c in chans:
+        p = tsv.get(c["addr"], {})
+        key = p.get("key", c["addr"].replace(":", "_").replace(".", "."))
+        src = c.get("src", SOURCE1.get(c["addr"], ""))
+        verify = "✓直播" if p.get("connect") == "True" else ("✗" if p else "—")
+        probe = f"[📄](channel-probes/{key}.md)" if p else ""
+        tag = p.get("tag", "")
+        row = (
+            f"| {c['num'] or '—'} | {c['name']} | {('['+tag+']') if tag and tag!='错误' else ''} "
+            f"| {p.get('resolution','')} | {p.get('dr','')} | {p.get('scan','')} "
+            f"| {short_video(p.get('video',''))} | {p.get('audio','')} "
+            f"| `{c['addr']}` | {src} | {c['group']} "
+            f"| {p.get('service','')} | {p.get('provider','')} "
+            f"| {c['tvg_id']} | {c['tvg_name']} | {verify} | {probe} |"
+        )
+        lines.append(row)
 
-    # display name without quality/number brackets → clean channel name
-    name_clean = re.sub(r'\[\d+\]', '', c["disp"])
-    name_clean = re.sub(r'\[高清\]|\[4K\]|\[标清\]', '', name_clean).strip()
+    open(OUT, "w", encoding="utf-8").write("\n".join(lines) + "\n")
+    print(f"wrote {len(chans)} rows to {OUT}")
+    print(f"  m3u channels: {sum(1 for c in chans if not c.get('extra'))}")
+    print(f"  extra (new/missing): {sum(1 for c in chans if c.get('extra'))}")
 
-    # verification date
-    verify = "✓直播 2026-11-15" if p.get("connect") == "true" else "✗失败 2026-11-15"
 
-    row = (
-        f"| {c['ch_num'] or '—'} "
-        f"| {name_clean} "
-        f"| {p.get('quality', c.get('qtag',''))} "
-        f"| {p.get('dr','-')} "
-        f"| {p.get('scan','-')} "
-        f"| {vshort} "
-        f"| {colour} "
-        f"| {p.get('audio','-')} "
-        f"| `{c['addr']}` "
-        f"| {c['group']} "
-        f"| {p.get('service','')} "
-        f"| {p.get('provider','')} "
-        f"| {c['tvg_id']} "
-        f"| {c['tvg_name']} "
-        f"| {c['tvg_logo'][:60]+'…' if len(c['tvg_logo'])>60 else c['tvg_logo']} "
-        f"| {verify} "
-        f"| {probe_link} |"
-    )
-    lines.append(row)
-
-with open(OUT, "w", encoding="utf-8") as f:
-    f.write("\n".join(lines) + "\n")
-
-print(f"Written {len(channels)} rows to {OUT}")
-# quick sanity
-print(f"Channels: {len(channels)}, TSV entries: {len(tsv)}")
+if __name__ == "__main__":
+    main()
