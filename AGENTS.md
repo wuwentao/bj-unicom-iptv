@@ -13,7 +13,7 @@
 - 节目源仅在**北京联通 IPTV 网络**内可用（组播地址段 `239.3.x.x`）。
 - 直接下载的列表里是 `rtp://` 组播地址。普通 PC 播放器与电视盒子无法直接播放组播流，需要通过路由器上的 `udpxy` 把组播转成单播（见[第 7 节](#7-局域网如何使用udpxy-组播转单播)）。
 - 本仓库**不是软件项目**，没有构建系统、没有依赖安装、没有可运行的服务。主要工作是**维护纯文本数据**（M3U 列表）和配套文档。
-- 唯一的脚本 `check_iptv_m3u.sh` 用于**离线验证频道有效性**，运行在局域网内的 Ubuntu/树莓派等设备上（见[第 6 节](#6-频道有效性验证-check_iptv_m3ush)）。
+- `scripts/` 下是辅助脚本，用于**在北京联通局域网内实测频道**（ffmpeg/ffprobe 探测、分类、生成数据表），运行在能访问组播流的 Ubuntu/树莓派等设备上（见[第 6 节](#6-频道有效性验证-scriptscheck_iptv_m3ush)、[第 11 节](#11-channelsmd-频道数据总表与探测体系)）。探测产出保存在 `channels.md` 与 `channel-probes/`。
 
 ### 对 AI agent 最重要的一句话
 
@@ -26,10 +26,12 @@
 | 文件 / 目录 | 作用 |
 | --- | --- |
 | `bj-unicom-iptv.m3u` | **核心产物**。北京联通 IPTV 全部频道的 M3U 播放列表，含 EPG、台标、分组、频道编号、组播地址。 |
-| `README.md` | 面向最终用户的首页说明：节目源来源、统计、使用方法、参考链接。 |
+| `README.md` | 面向最终用户的首页说明：统计、使用方法、参考链接。 |
+| `channels.md` | **频道数据总表**。每个频道/源经 ffprobe/ffmpeg 实测的分辨率、动态范围(SDR/HDR)、扫描、编码、音频、service_name、建议显示名、失效清单等；含基础知识科普。见[第 11 节](#11-channelsmd-频道数据总表与探测体系)。 |
+| `channel-probes/` | 每个组播地址一个 `<ip>_<port>.md`，保存历次探测的**原始** ffmpeg banner + ffprobe JSON（带时间戳，追加不覆盖）。 |
+| `scripts/` | 维护脚本（见[第 11 节](#11-channelsmd-频道数据总表与探测体系)）：`probe-and-record.sh`（探测+分类+记录）、`probe-all-m3u.sh`（批量）、`iptv_classify.py`（共享分类逻辑）、`build_summary.py`、`gen_table.py`、`regen_probe_tables.py`、`check_iptv_m3u.sh`（整表连通性验证）。 |
 | `iptv.md` | IPTV 中继原理详解：光猫权限、udpxy、IGMP proxy/snooping、手工组播路由、抓包获取节目源的方法。 |
 | `password.md` | 常见北京联通 IPTV 机顶盒的管理密码对照表。 |
-| `check_iptv_m3u.sh` | 频道有效性验证脚本，用 ffmpeg/ffprobe 逐个探测频道并截图、生成报告。 |
 | `.github/workflows/ci.yml` | GitHub Actions 工作流（目前是模板占位，见[第 9 节已知问题](#9-已知问题与技术债)）。 |
 | `resource/` | 文档用图：`iptv.png`（拓扑图）、`merlin.jpg`、`modem.jpg`、`udpxy.png`。 |
 | `AGENTS.md` 及其软链接 | 本文件，AI agent 指南。 |
@@ -88,21 +90,38 @@ rtp://239.3.1.129:8008
 显示名（`#EXTINF` 行最后一个逗号之后的内容）遵循约定：
 
 ```
-<频道名><[频道编号]><[画质标识]>
+<频道名><[频道编号]><[画质/质量标识...]>
 ```
 
-- **频道名**：如 `CCTV-1综合`、`BRTV北京卫视`、`湖南卫视`。北京台统一用 `BRTV` 前缀。
+- **频道名**：如 `CCTV-1综合`、`BRTV北京卫视`、`湖南卫视`。北京台统一用 `BRTV` 前缀。4K 频道名里**不要**再重复"4K超高清/超清/SDR/HDR"（这些由质量标识表达），例如 `湖南卫视4K超高清` → `湖南卫视`。
 - **`[频道编号]`**：IPTV 遥控器上对应的频道号，如 `[1]`、`[21]`、`[405]`。范围约 1–515，**不连续**。这是真实的物理频道号，不是数组下标。
-- **`[画质标识]`**：`[高清]`、`[4K]` 或 `[标清]` 三者之一；**传统标清频道可能不带任何画质标识**（历史遗留，等价于标清）。
+- **`[画质/质量标识]`**：见下表的**新版约定**。
 
-画质定义（与 README 一致）：
+#### 画质/质量标识约定（新版，务必遵守）
 
-| 标识 | 含义 | 典型分辨率 |
+分辨率仍分三档（也决定 `group-title` 归组：1080p/1080i 都归「高清」）：
+
+| 档位 | 显示名标识 | 说明 |
 | --- | --- | --- |
-| `[高清]` | 高清 | 1920×1080（1080p） |
-| `[4K]` | 超高清 | 3840×2160 |
-| `[标清]` | 传统标清 | 720×576（4:3） |
-| 无标识 | 视作标清 | — |
+| 高清·逐行 | `[高清][1080p]` | **保留 `[高清]`，其后追加 `[1080p]`** |
+| 高清·隔行 | `[高清][1080i]` | **保留 `[高清]`，其后追加 `[1080i]`** |
+| 高清·扫描未定 | `[高清]` | ffprobe 未给扫描字段时只保留 `[高清]` |
+| 4K·10bit HDR | `[4K HDR]` | 3840×2160 + 10bit + HLG/PQ |
+| 4K·8bit SDR | `[4K SDR]` | 3840×2160 + 8bit（即使带 bt2020/HLG 标签） |
+| 标清 | `[标清]` | 720×576；历史遗留无标识的也视作标清 |
+
+示例（改名方向）：
+
+```
+CCTV-1综合[1][高清]        → CCTV-1综合[1][高清][1080i]
+CCTV-3综艺[3][高清]        → CCTV-3综艺[3][高清][1080p]
+湖南卫视4K超高清[405][4K]  → 湖南卫视[405][4K HDR]
+BRTV北京卫视SDR[81][4K]    → BRTV北京卫视[81][4K SDR]
+```
+
+- **1080p / 1080i 不是新画质档，仍属"高清"**；`group-title` 的 `[高清]` 不变，只是显示名尾部多一个扫描标识。
+- `[1080p]`/`[1080i]`/`[4K SDR]`/`[4K HDR]` **由脚本按实测确定性算出**（见[第 11 节](#11-channelsmd-频道数据总表与探测体系)），不要手工臆断；`channels.md §5.2` 的「频道名称(建议显示名)」列即为改名目标值。
+- 判定依据（SDR/HDR 看**位深**，不看标签真伪）：10bit+HLG/PQ=HDR；8bit=SDR。科普见 `channels.md` 第 2 节。
 
 ### 3.6 组播地址
 
@@ -114,16 +133,22 @@ rtp://239.3.1.129:8008
 
 ## 4. 频道统计（当前快照）
 
-以文件实际内容为准；下面是最近一次核对的结果，统计口径为**显示名末尾的画质标识**：
+当前 `bj-unicom-iptv.m3u` 共 **158** 个频道。**按实测分类**（1080p/1080i/4K SDR/4K HDR/标清，见 `channels.md §5.1`）：
 
-| 口径 | 数量 |
+| 分类 | 数量 |
 | --- | --- |
-| **总频道数** | **158** |
-| 高清 `[高清]` | 117 |
-| 4K `[4K]` | 16 |
-| 标清 `[标清]` | 25 |
+| 1080p（高清·逐行） | 59 |
+| 1080i（高清·隔行） | 55 |
+| 高清（扫描未定） | 1 |
+| 4K SDR（8bit） | 4 |
+| 4K HDR（10bit） | 8 |
+| 标清 | 24 |
+| 失效/无视频元数据 | 7 |
+| **合计** | **158** |
 
-> 修改 m3u 后请同步更新 README 的统计，并用下面的命令重新核对（见[第 8 节](#8-常用核对与维护命令)）。README 历史上出现过与实际不符的统计（例如 213/116/13/25），不要以 README 旧值为准，始终以脚本核对的实际值为准。
+> 分组小计：高清 115、4K 12（另 3 个 4K 源失效）、标清 24。
+> 旧版"按显示名画质标识"口径（高清 117 / 4K 16 / 标清 25）仍可用 [第 8 节](#8-常用核对与维护命令) 命令核对；新版按实测细分以 `channels.md` 为准。
+> 修改 m3u 后请同步更新 README 与 `channels.md`（重跑 `scripts/build_summary.py` + `scripts/gen_table.py`）。不要以 README 旧值为准，始终以脚本核对的实际值为准。
 
 ---
 
@@ -145,7 +170,7 @@ rtp://239.3.1.129:8008
 
 ---
 
-## 6. 频道有效性验证：`check_iptv_m3u.sh`
+## 6. 频道有效性验证：`scripts/check_iptv_m3u.sh`
 
 该脚本用 **ffmpeg/ffprobe 逐个探测每个频道是否真实有效**，并记录分辨率、音视频轨道、截图与统计报告。它是维护节目源质量的主要工具。
 
@@ -169,7 +194,9 @@ rtp://239.3.1.129:8008
 
 1. 复制一份播放列表：`cp bj-unicom-iptv.m3u iptv.m3u`
 2. 把 `iptv.m3u` 里的 `rtp://` 全部替换为 `http://<udpxy_ip>:<port>/rtp/`（例：`http://192.168.2.1:8012/rtp/`）
-3. 在局域网设备上运行脚本：`./check_iptv_m3u.sh`
+3. 在局域网设备上运行脚本：`./scripts/check_iptv_m3u.sh`
+
+> 提示：逐个频道的探测+分类+原始数据记录，推荐用 `scripts/probe-and-record.sh` / `scripts/probe-all-m3u.sh`（见[第 11 节](#11-channelsmd-频道数据总表与探测体系)），它直接吃 `rtp://`（内部走 udpxy），并自动判定 1080i/1080p/4K SDR/4K HDR。
 
 > 注意：脚本当前把输入文件名**硬编码为 `iptv.m3u`**（变量 `M3U_FILE="iptv.m3u"`），而仓库里的列表叫 `bj-unicom-iptv.m3u`。这是一个已知的不一致，见[第 9 节](#9-已知问题与技术债)。
 
@@ -258,7 +285,8 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 供 agent 参考，**未经用户确认不要擅自大改**，但发现时可提出或在相关 PR 中一并修复：
 
 - **README 统计可能过时**：历史上写过 `213/116/13/25`，与实际不符。以第 4 节与第 8 节脚本核对值为准。
-- **验证脚本输入文件名不一致**：`check_iptv_m3u.sh` 硬编码 `M3U_FILE="iptv.m3u"`，仓库列表名为 `bj-unicom-iptv.m3u`。使用时需手工复制/改名（见 6.2），或改脚本。
+- **验证脚本输入文件名不一致**：`scripts/check_iptv_m3u.sh` 硬编码 `M3U_FILE="iptv.m3u"`，仓库列表名为 `bj-unicom-iptv.m3u`。使用时需手工复制/改名（见 6.2），或改脚本。
+- **失效/待复核频道**：`channels.md §5.3` 维护了一份 removed list（探测连通但无视频元数据的源），其中 `CCTV 4K[85]`、`广东卫视4K[406]`、`深圳卫视4K[408]` 的现有 `*:2000` 源已失效（后两者有可用新源 `239.3.1.27/28:2000`）。确认长期失效的可从 m3u 移除并在该表登记。
 - **CI 工作流指向错误分支且仍是模板**：`.github/workflows/ci.yml` 的 `on.push` / `on.pull_request` 监听 `master`，而仓库默认分支是 `main`，因此实际从不触发；且内容只是 `echo Hello, world!` 占位，没有真正的校验逻辑。
 - **部分频道缺 EPG 元数据**：约有数十条 `tvg-id=""`/`tvg-name=""`/`tvg-logo=""`，这些频道在支持 EPG 的播放器里不显示节目单和台标。补全需从 EPG 源查到对应 id。
 - **文件末尾无换行符**：`bj-unicom-iptv.m3u` 最后一行没有结尾换行，追加内容时注意先补一个换行再追加。
@@ -281,15 +309,58 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 
 ---
 
-## 11. 参考资料
+## 11. channels.md 频道数据总表与探测体系
+
+`channels.md` + `channel-probes/` + `scripts/` 构成一套**确定性**的频道实测数据体系。核心原则：**能用固定脚本确定性算出的，一律脚本算，不靠 AI/人工臆断**；只有「看台标认频道名」「定 group-title」才需人工。
+
+### 12.1 组成
+
+| 部分 | 作用 |
+| --- | --- |
+| `scripts/probe-and-record.sh` | 探测单个组播地址：经 udpxy 拉流 → ffprobe/ffmpeg → 确定性判定 画质/分辨率/动态范围(SDR/HDR)/扫描/编码/音频/显示名后缀 → 按 `channel-probes/<ip>_<port>.md` **追加**记录（含原始 banner+JSON+时间戳）→ 可选截图 + 摘要 TSV。 |
+| `scripts/probe-all-m3u.sh` | 批量：解析 m3u 逐个调用上面脚本，可断点续跑。 |
+| `scripts/iptv_classify.py` | **共享分类逻辑**（与 bash `classify()` 规则一致）：从 ffprobe JSON 算出 cat/name_suffix 等。改判定规则**只改这里 + bash classify()**，保持两者同步。 |
+| `scripts/build_summary.py` | 读 `channel-probes/*.md` 内嵌 JSON → 重建合并摘要 `channel-probes/_all_summary.tsv`。 |
+| `scripts/gen_table.py` | 合并 m3u 元数据 + 摘要 TSV → 生成 `channels.md §5.2` 总表；内含人工确认区 `EXTRA`/`NUM_OVERRIDE`/`NAME_OVERRIDE`。 |
+| `scripts/regen_probe_tables.py` | 术语/规则变更后，从已存 JSON **重算**所有 `channel-probes/*.md` 判定表，**不重新探测**。 |
+| `channel-probes/<ip>_<port>.md` | 单个组播地址的探测历史，新记录追加在末尾，**以最新一条为准**；换频道不换地址→同文件追加，换地址→新文件。 |
+
+### 12.2 确定性判定规则（务必与脚本一致）
+
+- **位深**：`pix_fmt` 含 `10le/10be/p010/10`→10bit，含 `12`→12bit，否则 8bit。
+- **画质**：1920×1080→高清；3840×2160→4K；720×576/560→标清；其他→其它(WxH)。
+- **动态范围（SDR/HDR 看位深，不看"标签真伪"）**：`transfer` 为 HLG(`arib-std-b67`)/PQ(`smpte2084`)/`bt2020-10` 且 **≥10bit** → HDR；否则 SDR（8bit 带 HLG/bt2020 标签也判 SDR，注明"带…标签但非10bit"）。
+- **扫描**：`field_order=tt/bb/tb/bt`→隔行(i)；`progressive`→逐行(p)；空→未知。
+- **显示名后缀**：高清→`[高清][1080p]`/`[高清][1080i]`/`[高清]`；4K→`[4K SDR]`/`[4K HDR]`；标清→`[标清]`（规则同[第 3.5 节](#35-显示名命名规则)）。
+
+### 12.3 格式要求（防止后续 AGENT 改错）
+
+- **`channels.md §5.2` 每行 17 列**，表头固定为：`编号 | 频道名称(建议显示名) | 统计分类 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 | 组播地址 | 源 | 现 group-title | service_name | provider | tvg-id | tvg-name | 验证 | 原始数据`。**不要手改表体**——改数据改源头（probe 记录 / `gen_table.py` 的 override 区），然后重跑生成。
+- **生成链路（改完任一环节按序重跑）**：`probe-and-record.sh`（新/变更源）→ `regen_probe_tables.py`（若改了分类规则）→ `build_summary.py` → `gen_table.py` → 把 `/tmp/channels_table.md` 并入 `channels.md §5.2`。
+- **脚本路径无关 cwd**：Python 脚本用 `__file__` 定位仓库根，bash 用 `ROOT_DIR="$SCRIPT_DIR/.."`；新增脚本请沿用，别写死相对路径。
+- **瞬时产物**（`_m3u_summary.tsv`/`_done_keys.tmp`/`_m3u_progress.log`/`_candidates_summary.tsv`）已在 `channel-probes/.gitignore` 忽略；**保留并提交** `_all_summary.tsv` 与各 `<ip>_<port>.md`。
+- **原始数据只增不改**：`channel-probes/*.md` 里的 ffmpeg banner + ffprobe JSON 是实测存档，复测用脚本**追加**新记录，不要手工编辑或删除历史。
+- **依赖**：`ffmpeg`/`ffprobe`/`jq`（Ubuntu `apt install ffmpeg jq`）。探测必须在**能访问北京联通组播的局域网**内跑。
+
+### 12.4 什么该脚本、什么该人工
+
+| 字段 | 来源 |
+| --- | --- |
+| 分辨率/画质/动态范围/扫描/编码/音频/显示名后缀/service_name/provider | **脚本确定性算出** |
+| 频道名称（看台标认台） | 人工/AI（截图在 `~/Downloads/iptv-new-channels-screenshots/` 等） |
+| group-title 归组、IPTV 频道编号 | 人工（机顶盒核对） |
+| tvg-id/tvg-name/tvg-logo | 取自 EPG 源 `epg.51zmt.top`，缺失留空 |
+
+---
+
+## 12. 参考资料
 
 - EPG 台标与节目单源：<http://epg.51zmt.top:8000/>（EPG 配置页 <https://epg.51zmt.top:8001/>）
-- 节目源上游：[sdhzdmzzl 北京联通 IPTV m3u 列表](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)
 - IPTV 中继原理与抓包方法：见本仓库 `iptv.md`
 - 机顶盒管理密码：见本仓库 `password.md`
 
 ---
 
-*本文件由 AI agent 依据 `init-ai-agent` 流程生成，覆盖仓库结构、M3U 数据模型、验证脚本与维护约定。*
+*本文件由 AI agent 依据 `init-ai-agent` 流程生成，覆盖仓库结构、M3U 数据模型、探测体系与维护约定。*
 
 <!-- Reviewed by: 🤖 Claude Code (model: Claude Opus 4.8) -->

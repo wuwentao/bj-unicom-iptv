@@ -8,10 +8,13 @@ import glob
 import json
 import os
 import re
+import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # 便于导入同目录 iptv_classify
 from iptv_classify import summarize
 
-PROBE_DIR = "channel-probes"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 仓库根（脚本在 scripts/ 下）
+PROBE_DIR = os.path.join(ROOT, "channel-probes")
 
 
 def build_table(addr, url, name_hint, shot, s):
@@ -27,7 +30,8 @@ def build_table(addr, url, name_hint, shot, s):
         f"| 分辨率 | {s['resolution']} |",
         f"| 动态范围(SDR/HDR) | {s['dynamic_range']} |",
         f"| 扫描方式 | {s['scan']} |",
-        f"| 建议显示名标识 | [{s['tag']}] |",
+        f"| 统计分类 | {s.get('cat', s.get('tag',''))} |",
+        f"| 显示名后缀 | {s.get('name_suffix','')} |",
         f"| 视频 | {s['video']} |",
         f"| 音频 | {s['audio']} |",
         f"| 截图 | {shot} |",

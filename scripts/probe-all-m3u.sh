@@ -17,12 +17,13 @@
 set -u
 export LANG=C.UTF-8 LC_ALL=C.UTF-8
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-M3U="${1:-$SCRIPT_DIR/bj-unicom-iptv.m3u}"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"   # 仓库根（脚本在 scripts/ 下）
+M3U="${1:-$ROOT_DIR/bj-unicom-iptv.m3u}"
 REC="$SCRIPT_DIR/probe-and-record.sh"
 export SHOTS_DIR="${SHOTS_DIR:-$HOME/iptv-shots-m3u}"
-export SUMMARY_TSV="${SUMMARY_TSV:-$SCRIPT_DIR/channel-probes/_m3u_summary.tsv}"
+export SUMMARY_TSV="${SUMMARY_TSV:-$ROOT_DIR/channel-probes/_m3u_summary.tsv}"
 FORCE="${FORCE:-0}"
-PROGRESS="$SCRIPT_DIR/channel-probes/_m3u_progress.log"
+PROGRESS="$ROOT_DIR/channel-probes/_m3u_progress.log"
 
 [ -f "$M3U" ]  || { echo "找不到 m3u: $M3U" >&2; exit 1; }
 [ -x "$REC" ]  || { echo "找不到可执行的 probe-and-record.sh" >&2; exit 1; }

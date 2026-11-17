@@ -65,19 +65,30 @@ def classify(width, height, pix_fmt, transfer, primaries, field_order):
     else:
         scan, scode = fo, ""
 
-    # 建议显示名标识
+    # 统计分类(cat) + 显示名后缀(name_suffix)
+    # 规则：1080p/1080i 仍属“高清”分组，显示名保留 [高清] 再追加 [1080p]/[1080i]；
+    #       4K 用 [4K SDR]/[4K HDR]；标清用 [标清]。
     if q == "4K":
-        tag = "4K HDR" if is_hdr else "4K SDR"
+        if is_hdr:
+            cat, name_suffix = "4K HDR", "[4K HDR]"
+        else:
+            cat, name_suffix = "4K SDR", "[4K SDR]"
     elif q == "高清":
-        tag = {"i": "1080i", "p": "1080p"}.get(scode, "1080")
+        if scode == "i":
+            cat, name_suffix = "1080i", "[高清][1080i]"
+        elif scode == "p":
+            cat, name_suffix = "1080p", "[高清][1080p]"
+        else:
+            cat, name_suffix = "高清(扫描未定)", "[高清]"
     elif q == "标清":
-        tag = "576i" if scode == "i" else "标清"
+        cat, name_suffix = "标清", "[标清]"
     else:
-        tag = q
+        cat, name_suffix = q, f"[{q}]"
 
     return {
         "quality": q, "resolution": f"{w}x{h}", "dynamic_range": dr,
-        "scan": scan, "bits": bits, "tag": tag, "is_hdr": is_hdr,
+        "scan": scan, "bits": bits, "cat": cat, "name_suffix": name_suffix,
+        "tag": cat, "is_hdr": is_hdr,
         "transfer": tr, "primaries": prim, "field_order": fo,
     }
 
@@ -102,7 +113,8 @@ def summarize(probe_json: dict) -> dict:
     if not v:
         return {
             "quality": "错误", "resolution": "-", "dynamic_range": "错误",
-            "scan": "错误", "bits": "-", "tag": "错误", "is_hdr": False,
+            "scan": "错误", "bits": "-", "cat": "错误", "name_suffix": "",
+            "tag": "错误", "is_hdr": False,
             "video": "(无视频轨/探测失败)", "audio": "-",
             "service": svc, "provider": prov, "connect": bool(streams),
         }

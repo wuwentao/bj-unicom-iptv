@@ -5,14 +5,15 @@
 多源频道（同一频道多个组播源）用“源”列标 1/2 并相邻排列。
 确定性字段来自 iptv_classify，不在此处重新判断。
 """
+import os
 import re
-from collections import defaultdict
 
-M3U = "bj-unicom-iptv.m3u"
-TSV = "channel-probes/_all_summary.tsv"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 仓库根（脚本在 scripts/ 下）
+M3U = os.path.join(ROOT, "bj-unicom-iptv.m3u")
+TSV = os.path.join(ROOT, "channel-probes/_all_summary.tsv")
 OUT = "/tmp/channels_table.md"
 
-# —— 人工确认区（来自 IPTV 机顶盒核对 / gist）——
+# —— 人工确认区（来自 IPTV 机顶盒核对）——
 # 新增/缺失源（不在 m3u 中）的地址 → (确认编号或"", 频道名, 建议group, 源号或"")
 EXTRA = {
     # gist 评论新增（2026-11 实测）
@@ -62,15 +63,17 @@ LOCAL_LAST = {"239.3.1.23:8001", "239.3.1.59:8001"}
 
 
 def load_tsv():
+    # TSV 列：key addr name connect 画质 分辨率 动态 扫描 统计分类 显示名后缀 视频 音频 service provider shot
     d = {}
     for line in open(TSV, encoding="utf-8"):
         p = line.rstrip("\n").split("\t")
-        if len(p) < 14:
-            p += [""] * (14 - len(p))
-        key, addr, name, connect, q, res, dr, scan, tag, video, audio, svc, prov, shot = p[:14]
+        if len(p) < 15:
+            p += [""] * (15 - len(p))
+        (key, addr, name, connect, q, res, dr, scan, cat, suffix,
+         video, audio, svc, prov, shot) = p[:15]
         d[addr] = dict(key=key, connect=connect, quality=q, resolution=res,
-                       dr=dr, scan=scan, tag=tag, video=video, audio=audio,
-                       service=svc, provider=prov, shot=shot)
+                       dr=dr, scan=scan, cat=cat, suffix=suffix, video=video,
+                       audio=audio, service=svc, provider=prov, shot=shot)
     return d
 
 
@@ -100,6 +103,14 @@ def parse_m3u():
     return chans
 
 
+def clean_4k_name(name):
+    """4K 频道名去掉冗余的 '4K超高清'/'超高清'/尾部 SDR/HDR（画质由后缀标识表达）。
+    保留作为品牌一部分的 'CCTV 4K'（空格+4K）。"""
+    n = re.sub(r"4K超高清|4K超清|超高清|超清", "", name)
+    n = re.sub(r"\s*(SDR|HDR)\s*$", "", n)
+    return n.strip() or name
+
+
 def short_video(v):
     m = re.match(r"(\S+)\s+(\S+(?:\s\S+)?)\s+(\d+bit)\s+\d+x\d+\s+\S+\s+transfer=\S+\s+primaries=\S+\s+field=\S+\s+level=(\S+)", v)
     if not m:
@@ -122,7 +133,7 @@ def main():
         chans.append(dict(addr=addr, num=num, name=name, group=group,
                           tvg_id="", tvg_name="", tvg_logo="", extra=True, src=src))
 
-    header = ("| 编号 | 频道名称 | 建议标识 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 "
+    header = ("| 编号 | 频道名称(建议显示名) | 统计分类 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 "
               "| 组播地址 | 源 | 现 group-title | service_name | provider | tvg-id | tvg-name | 验证 | 原始数据 |")
     sep = "| --- " * 17 + "|"
 
@@ -143,9 +154,14 @@ def main():
         src = c.get("src", SOURCE1.get(c["addr"], ""))
         verify = "✓直播" if p.get("connect") == "True" else ("✗" if p else "—")
         probe = f"[📄](channel-probes/{key}.md)" if p else ""
-        tag = p.get("tag", "")
+        cat = p.get("cat", "")
+        # 建议显示名 = 频道名 + [编号] + 显示名后缀（如 CCTV-1综合[1][高清][1080i]）
+        num_part = f"[{c['num']}]" if c["num"] else ""
+        suffix = p.get("suffix", "")
+        base = clean_4k_name(c["name"]) if p.get("quality") == "4K" else c["name"]
+        disp_name = f"{base}{num_part}{suffix}"
         row = (
-            f"| {c['num'] or '—'} | {c['name']} | {('['+tag+']') if tag and tag!='错误' else ''} "
+            f"| {c['num'] or '—'} | {disp_name} | {cat} "
             f"| {p.get('resolution','')} | {p.get('dr','')} | {p.get('scan','')} "
             f"| {short_video(p.get('video',''))} | {p.get('audio','')} "
             f"| `{c['addr']}` | {src} | {c['group']} "

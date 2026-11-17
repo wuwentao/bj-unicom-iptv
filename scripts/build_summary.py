@@ -6,12 +6,16 @@
 """
 import glob
 import json
+import os
 import re
+import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # 便于导入同目录 iptv_classify
 from iptv_classify import summarize
 
-PROBE_DIR = "channel-probes"
-OUT = "channel-probes/_all_summary.tsv"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 仓库根（脚本在 scripts/ 下）
+PROBE_DIR = os.path.join(ROOT, "channel-probes")
+OUT = os.path.join(ROOT, "channel-probes/_all_summary.tsv")
 
 JSON_RE = re.compile(r"```json\n(.*?)\n```", re.DOTALL)
 NAME_RE = re.compile(r"频道名称\(hint·需人工/台标\) \| (.*?) \|")
@@ -33,7 +37,8 @@ def main():
         ip, port = key.rsplit("_", 1)
         addr = f"{ip}:{port}"
         rows.append([key, addr, name, str(s["connect"]), s["quality"],
-                     s["resolution"], s["dynamic_range"], s["scan"], s["tag"],
+                     s["resolution"], s["dynamic_range"], s["scan"],
+                     s.get("cat", s.get("tag", "")), s.get("name_suffix", ""),
                      s["video"], s["audio"], s["service"], s["provider"], shot])
     with open(OUT, "w", encoding="utf-8") as o:
         for r in rows:

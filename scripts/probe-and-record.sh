@@ -31,7 +31,8 @@ NAME="${NAME:-}"
 SHOTS_DIR="${SHOTS_DIR:-}"
 SUMMARY_TSV="${SUMMARY_TSV:-}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-OUTDIR="$SCRIPT_DIR/channel-probes"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"   # 仓库根（脚本在 scripts/ 下）
+OUTDIR="$ROOT_DIR/channel-probes"
 mkdir -p "$OUTDIR"
 [ -n "$SHOTS_DIR" ] && mkdir -p "$SHOTS_DIR"
 
@@ -89,18 +90,23 @@ classify() {
     ""|unknown|-) scan="未知(字段缺失)"; scode="" ;;
     *)            scan="${fo}";       scode="" ;;
   esac
-  # 建议显示名标识
-  local tag
+  # 统计分类(cat) + 显示名后缀(name_suffix)
+  # 1080p/1080i 仍属“高清”分组：显示名保留 [高清] 再追加 [1080p]/[1080i]
+  local cat suffix
   if [ "$q" = "4K" ]; then
-    [ "$is_hdr" = "1" ] && tag="4K HDR" || tag="4K SDR"
+    if [ "$is_hdr" = "1" ]; then cat="4K HDR"; suffix="[4K HDR]"; else cat="4K SDR"; suffix="[4K SDR]"; fi
   elif [ "$q" = "高清" ]; then
-    case "$scode" in i) tag="1080i";; p) tag="1080p";; *) tag="1080";; esac
+    case "$scode" in
+      i) cat="1080i"; suffix="[高清][1080i]" ;;
+      p) cat="1080p"; suffix="[高清][1080p]" ;;
+      *) cat="高清(扫描未定)"; suffix="[高清]" ;;
+    esac
   elif [ "$q" = "标清" ]; then
-    case "$scode" in i) tag="576i";; *) tag="标清";; esac
+    cat="标清"; suffix="[标清]"
   else
-    tag="$q"
+    cat="$q"; suffix="[$q]"
   fi
-  printf '%s\t%s\t%s\t%s\t%s' "$q" "$dr" "$scan" "$bits" "$tag"
+  printf '%s\t%s\t%s\t%s\t%s\t%s' "$q" "$dr" "$scan" "$bits" "$cat" "$suffix"
 }
 
 [ $# -ge 1 ] || { echo "用法: $0 <组播IP:端口> [更多...]"; exit 2; }
@@ -132,12 +138,12 @@ for addr in "$@"; do
       ([.streams[]?|select(.codec_type=="video")][0]) as $v |
       "\($v.width//"-") \($v.height//"-") \($v.pix_fmt//"-") \(($v.profile//"-")|gsub(" ";"_")) \($v.color_transfer//"-") \($v.color_primaries//"-") \($v.field_order//"-") \($v.codec_name//"-") \($v.level//"-")"')
     acodec="$(printf '%s' "$sj" | jq -r '([.streams[]?|select(.codec_type=="audio")][0]) as $a | "\($a.codec_name//"-") \($a.channels//"-")ch \($a.sample_rate//"-")Hz \(if $a.bit_rate then (($a.bit_rate|tonumber/1000|floor|tostring)+"k") else "-" end)"')"
-    IFS=$'\t' read -r cq cdr cscan cbits ctag < <(classify "$vw" "$vh" "$vpf" "$vprof" "$vtr" "$vprim" "$vfo")
+    IFS=$'\t' read -r cq cdr cscan cbits ccat csuffix < <(classify "$vw" "$vh" "$vpf" "$vprof" "$vtr" "$vprim" "$vfo")
     vres="${vw}x${vh}"
     vsummary="${vcodec} ${vprof//_/ } ${cbits}bit ${vw}x${vh} ${vpf} transfer=${vtr} primaries=${vprim} field=${vfo} level=${vlevel}"
     connect="true"
   else
-    svc="-"; prov="-"; acodec="-"; vsummary="(探测失败/无数据)"; cq="错误"; cdr="错误"; cscan="错误"; cbits="-"; ctag="错误"; vres="-"
+    svc="-"; prov="-"; acodec="-"; vsummary="(探测失败/无数据)"; cq="错误"; cdr="错误"; cscan="错误"; cbits="-"; ccat="错误"; csuffix=""; vres="-"
     connect="false"
   fi
 
@@ -169,7 +175,8 @@ for addr in "$@"; do
     echo "| 分辨率 | ${vres} |"
     echo "| 动态范围(SDR/HDR) | ${cdr} |"
     echo "| 扫描方式 | ${cscan} |"
-    echo "| 建议显示名标识 | [${ctag}] |"
+    echo "| 统计分类 | ${ccat} |"
+    echo "| 显示名后缀 | ${csuffix} |"
     echo "| 视频 | ${vsummary} |"
     echo "| 音频 | ${acodec} |"
     echo "| 截图 | ${shot_rel} |"
@@ -187,10 +194,10 @@ for addr in "$@"; do
   } >> "$file"
 
   # 摘要 TSV（供批量汇总生成总表）：
-  # key \t addr \t name \t connect \t 画质 \t 分辨率 \t 动态 \t 扫描 \t 标识 \t 视频 \t 音频 \t service \t provider \t shot
+  # key \t addr \t name \t connect \t 画质 \t 分辨率 \t 动态 \t 扫描 \t 统计分类 \t 显示名后缀 \t 视频 \t 音频 \t service \t provider \t shot
   if [ -n "$SUMMARY_TSV" ]; then
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
-      "$key" "$addr" "${NAME:-}" "$connect" "$cq" "$vres" "$cdr" "$cscan" "$ctag" "$vsummary" "$acodec" "$svc" "$prov" "$shot_rel" >> "$SUMMARY_TSV"
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+      "$key" "$addr" "${NAME:-}" "$connect" "$cq" "$vres" "$cdr" "$cscan" "$ccat" "$csuffix" "$vsummary" "$acodec" "$svc" "$prov" "$shot_rel" >> "$SUMMARY_TSV"
   fi
-  echo "    画质=${cq} 动态=${cdr} 扫描=${cscan} 连接=${connect}  -> channel-probes/${key}.md"
+  echo "    画质=${cq} 动态=${cdr} 扫描=${cscan} 分类=${ccat} 连接=${connect}  -> channel-probes/${key}.md"
 done
