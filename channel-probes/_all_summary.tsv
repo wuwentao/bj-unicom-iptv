@@ -1,19 +1,28 @@
 239.2.1.206_8000	239.2.1.206:8000	CCTV16奥林匹克4K(源2)	True	4K	3840x2160	SDR(8bit·带arib-std-b67标签但非10bit)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=arib-std-b67 primaries=bt2020 field=- level=153	aac 2ch 48000Hz 254k	CCTV 16 UHD	CCTV	-
 239.3.1.100_8001	239.3.1.100:8001	北京IPTV淘娱乐[39][高清]	True	高清	1920x1080	SDR(8bit·bt709)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=progressive level=40	aac 2ch 44100Hz 131k	-	-	239.3.1.100_8001__北京IPTV淘娱乐[39][高清].png
 239.3.1.102_8001	239.3.1.102:8001	北京IPTV萌宠TV[34][高清]	True	高清	1920x1080	SDR(8bit·bt709)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=progressive level=40	aac 2ch 44100Hz 132k	-	-	239.3.1.102_8001__北京IPTV萌宠TV[34][高清].png
+239.3.1.103_8001	239.3.1.103:8001	高清测试	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.104_8001	239.3.1.104:8001	4K测试	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.105_8092	239.3.1.105:8092	CCTV-4中文国际[4][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.105_8092__CCTV-4中文国际[4][高清].png
 239.3.1.106_8001	239.3.1.106:8001	CHC动作电影	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 192k	-	-	-
 239.3.1.107_8001	239.3.1.107:8001	求索纪录4K	True	4K	3840x2160	SDR(8bit·带arib-std-b67标签但非10bit)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=arib-std-b67 primaries=bt2020 field=- level=180	aac 2ch 48000Hz 255k	QiuSuo-4K	WASU	-
 239.3.1.108_8001	239.3.1.108:8001	中国天气	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 192k	-	-	-
 239.3.1.109_8001	239.3.1.109:8001	环球旅游	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 192k	-	-	-
+239.3.1.111_8001	239.3.1.111:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.112_3002	239.3.1.112:3002	湖南卫视4K超高清[405][4K]	True	4K	3840x2160	HDR(10bit·arib-std-b67)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=arib-std-b67 primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.112_3002__湖南卫视4K超高清[405][4K].png
+239.3.1.112_8001	239.3.1.112:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.113_3003	239.3.1.113:3003	江苏卫视4K超高清[407][4K]	True	4K	3840x2160	HDR(10bit·arib-std-b67)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=arib-std-b67 primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.113_3003__江苏卫视4K超高清[407][4K].png
+239.3.1.113_8001	239.3.1.113:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.114_3004	239.3.1.114:3004	浙江卫视4K超高清[410][4K]	True	4K	3840x2160	HDR(10bit·reserved)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=reserved primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.114_3004__浙江卫视4K超高清[410][4K].png
+239.3.1.114_8001	239.3.1.114:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.115_8000	239.3.1.115:8000	BRTV纪实科教[23][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 128k	-	-	239.3.1.115_8000__BRTV纪实科教[23][高清].png
 239.3.1.116_8000	239.3.1.116:8000	BRTV财经[25][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 127k	-	-	239.3.1.116_8000__BRTV财经[25][高清].png
 239.3.1.117_8000	239.3.1.117:8000	BRTV生活[27][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 128k	-	-	239.3.1.117_8000__BRTV生活[27][高清].png
+239.3.1.118_8000	239.3.1.118:8000	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.118_8001	239.3.1.118:8001	BRTV北京卫视HDR[421][4K]	True	4K	3840x2160	HDR(10bit·arib-std-b67)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=arib-std-b67 primaries=bt2020 field=- level=153	ac3 6ch 48000Hz 448k	BRTV-WS4K	BRTV	239.3.1.118_8001__BRTV北京卫视HDR[421][4K].png
 239.3.1.119_3006	239.3.1.119:3006	东方卫视4K超高清[409][4K]	True	4K	3840x2160	HDR(10bit·arib-std-b67)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=arib-std-b67 primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.119_3006__东方卫视4K超高清[409][4K].png
+239.3.1.120_8000	239.3.1.120:8000	BRTV体育休闲4K HDR	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.121_8000	239.3.1.121:8000	BRTV体育休闲4K SDR	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.122_8160	239.3.1.122:8160	重庆卫视[57][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.122_8160__重庆卫视[57][高清].png
 239.3.1.123_8164	239.3.1.123:8164	江西卫视[58][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.123_8164__江西卫视[58][高清].png
 239.3.1.124_8128	239.3.1.124:8128	CCTV-13新闻[13][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.124_8128__CCTV-13新闻[13][高清].png
@@ -46,9 +55,11 @@
 239.3.1.154_8001	239.3.1.154:8001	密云电视台[高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(bb)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=bb level=40	mp2 2ch 48000Hz 192k	miyun	Encoder	239.3.1.154_8001__密云电视台[高清].png
 239.3.1.155_4120	239.3.1.155:4120	三沙卫视[163][标清]	True	标清	720x576	SDR(8bit·未标注)	隔行(tt)	576i	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=tt level=30	mp2 2ch 48000Hz 96k	-	-	239.3.1.155_4120__三沙卫视[163][标清].png
 239.3.1.156_8148	239.3.1.156:8148	东南卫视[56][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	东南卫视高清	-	239.3.1.156_8148__东南卫视[56][高清].png
+239.3.1.157_8176	239.3.1.157:8176	体育赛事高清	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.158_8000	239.3.1.158:8000	BRTV影视[24][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 127k	-	-	239.3.1.158_8000__BRTV影视[24][高清].png
 239.3.1.159_8000	239.3.1.159:8000	BRTV新闻[29][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 127k	-	-	239.3.1.159_8000__BRTV新闻[29][高清].png
 239.3.1.160_8001	239.3.1.160:8001	聚鲨环球精选(源2)	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 64k	DXhuanqiujingxuanHD93	-	239.3.1.160_8001__聚鲨环球精选(源2).png
+239.3.1.161_8001	239.3.1.161:8001	南方卫视	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.163_8001	239.3.1.163:8001	朝阳融媒[高清]	True	高清	1920x1080	SDR(8bit·bt709)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=tt level=40	mp2 2ch 48000Hz 320k	ChaoyangHD	-	239.3.1.163_8001__朝阳融媒[高清].png
 239.3.1.164_8001	239.3.1.164:8001	湖南卫视快乐垂钓[320][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 192k	-	-	239.3.1.164_8001__湖南卫视快乐垂钓[320][高清].png
 239.3.1.165_8001	239.3.1.165:8001	湖南卫视茶频道[321][高清]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
@@ -60,9 +71,11 @@
 239.3.1.173_8001	239.3.1.173:8001	CCTV-5体育[5][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 128k	-	-	239.3.1.173_8001__CCTV-5体育[5][高清].png
 239.3.1.174_8001	239.3.1.174:8001	CCTV-6电影[6][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 128k	-	-	239.3.1.174_8001__CCTV-6电影[6][高清].png
 239.3.1.175_8001	239.3.1.175:8001	CCTV-8电视剧[8][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 128k	-	-	239.3.1.175_8001__CCTV-8电视剧[8][高清].png
+239.3.1.178_8001	239.3.1.178:8001	淘精彩	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.179_8001	239.3.1.179:8001	聚鲨环球精选[19][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 63k	DXjushahuanqiujingxuanNEW	-	239.3.1.179_8001__聚鲨环球精选[19][高清].png
 239.3.1.180_8001	239.3.1.180:8001	优购物[32][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 130k	liantongyouguwu	-	239.3.1.180_8001__优购物[32][高清].png
 239.3.1.181_8001	239.3.1.181:8001	时尚购物[33][高清]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.183_8001	239.3.1.183:8001	CCTV-16 4K	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.184_8001	239.3.1.184:8001	CCTV-16奥林匹克[16][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 128k	-	-	239.3.1.184_8001__CCTV-16奥林匹克[16][高清].png
 239.3.1.185_8001	239.3.1.185:8001	家有购物[42][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 130k	jiayougouwuN	FFmpeg	239.3.1.185_8001__家有购物[42][高清].png
 239.3.1.186_8001	239.3.1.186:8001	家有购物精选[30][高清]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
@@ -75,14 +88,29 @@
 239.3.1.194_9020	239.3.1.194:9020	IPTV热播剧场[202][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.194_9020__IPTV热播剧场[202][高清].png
 239.3.1.195_9024	239.3.1.195:9024	IPTV经典电影[203][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.195_9024__IPTV经典电影[203][高清].png
 239.3.1.196_9012	239.3.1.196:9012	IPTV魅力时尚[204][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.196_9012__IPTV魅力时尚[204][高清].png
+239.3.1.197_9016	239.3.1.197:9016	IPTV6＋	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.198_9004	239.3.1.198:9004	IPTV3＋	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.199_9000	239.3.1.199:9000	IPTV少儿动画[207][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.199_9000__IPTV少儿动画[207][高清].png
+239.3.1.200_9008	239.3.1.200:9008	IPTV5＋	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.201_8001	239.3.1.201:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.201_8072	239.3.1.201:8072	IPTV8＋	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.201_8180	239.3.1.201:8180	甘肃卫视高清[62][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.201_8180__甘肃卫视高清[62][高清].png
 239.3.1.202_2000	239.3.1.202:2000	深圳卫视4K超高清[408][4K]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.202_8001	239.3.1.202:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.203_2000	239.3.1.203:2000	广东卫视4K超高清[406][4K]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.203_8001	239.3.1.203:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.203_8220	239.3.1.203:8220	陕西卫视[高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	mp2 2ch 48000Hz 256k	-	-	239.3.1.203_8220__陕西卫视[高清].png
+239.3.1.204_8001	239.3.1.204:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.204_8224	239.3.1.204:8224	内蒙古卫视高清	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.204_8224__内蒙古卫视高清.png
+239.3.1.205_8001	239.3.1.205:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.205_8228	239.3.1.205:8228	海南卫视高清	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.205_8228__海南卫视高清.png
 239.3.1.206_8001	239.3.1.206:8001	CCTV16奥林匹克4K(源1)	True	4K	3840x2160	SDR(8bit·带arib-std-b67标签但非10bit)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=arib-std-b67 primaries=bt2020 field=- level=153	aac 2ch 48000Hz 255k	CCTV 16 UHD	CCTV	-
+239.3.1.207_8001	239.3.1.207:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.208_8001	239.3.1.208:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.209_8052	239.3.1.209:8052	山东卫视[50][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.209_8052__山东卫视[50][高清].png
 239.3.1.210_8056	239.3.1.210:8056	辽宁卫视[51][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	Bravo	239.3.1.210_8056__辽宁卫视[51][高清].png
 239.3.1.211_8064	239.3.1.211:8064	安徽卫视[52][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	AHHD	-	239.3.1.211_8064__安徽卫视[52][高清].png
+239.3.1.212_8060	239.3.1.212:8060	纪实频道HD	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.213_4220	239.3.1.213:4220	CCTV-4 中文国际 欧洲[341][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.213_4220__CCTV-4_中文国际_欧洲[341][高清].png
 239.3.1.214_4220	239.3.1.214:4220	CCTV-4 中文国际 美洲[342][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.214_4220__CCTV-4_中文国际_美洲[342][高清].png
 239.3.1.215_4220	239.3.1.215:4220	CGTN 新闻[343][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.215_4220__CGTN_新闻[343][高清].png
@@ -100,11 +128,13 @@
 239.3.1.228_8000	239.3.1.228:8000	BRTV影视[124][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	aac 2ch 48000Hz 127k	-	-	239.3.1.228_8000__BRTV影视[124][标清].png
 239.3.1.229_8000	239.3.1.229:8000	BRTV财经[125][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	aac 2ch 48000Hz 128k	-	-	239.3.1.229_8000__BRTV财经[125][标清].png
 239.3.1.22_8001	239.3.1.22:8001	BRTV北京卫视SDR[81][4K]	True	4K	3840x2160	SDR(8bit·bt709)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=bt709 primaries=bt709 field=- level=150	aac 2ch 48000Hz 255k	-	-	239.3.1.22_8001__BRTV北京卫视SDR[81][4K].png
+239.3.1.230_8000	239.3.1.230:8000	BRTV体育休闲	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.231_8000	239.3.1.231:8000	BRTV生活[127][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	aac 2ch 48000Hz 128k	-	-	239.3.1.231_8000__BRTV生活[127][标清].png
 239.3.1.233_8000	239.3.1.233:8000	BRTV新闻[129][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	aac 2ch 48000Hz 128k	-	-	239.3.1.233_8000__BRTV新闻[129][标清].png
 239.3.1.234_8000	239.3.1.234:8000	BRTV卡酷少儿[128][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	aac 2ch 48000Hz 127k	-	-	239.3.1.234_8000__BRTV卡酷少儿[128][标清].png
 239.3.1.235_8000	239.3.1.235:8000	BRTV国际频道[131][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 127k	-	-	239.3.1.235_8000__BRTV国际频道[131][高清].png
 239.3.1.236_2000	239.3.1.236:2000	爱上4K[401][4K]	True	4K	3840x2160	SDR(8bit·未标注)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=- primaries=- field=- level=150	aac 2ch 48000Hz 258k	-	-	239.3.1.236_2000__爱上4K[401][4K].png
+239.3.1.237_4120	239.3.1.237:4120	IPTV5＋高清	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.238_8001	239.3.1.238:8001	北京IPTV淘Baby[36][高清]	True	高清	1920x1080	SDR(8bit·bt709)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=progressive level=40	aac 2ch 44100Hz 109k	-	-	239.3.1.238_8001__北京IPTV淘Baby[36][高清].png
 239.3.1.23_8001	239.3.1.23:8001	平谷融媒	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	aac 2ch 48000Hz 192k	pinggu	doteck	-
 239.3.1.240_8172	239.3.1.240:8172	吉林卫视[78][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.240_8172__吉林卫视[78][高清].png
@@ -113,11 +143,17 @@
 239.3.1.243_8000	239.3.1.243:8000	BRTV体育休闲[26][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	aac 2ch 48000Hz 128k	-	-	239.3.1.243_8000__BRTV体育休闲[26][高清].png
 239.3.1.244_2000	239.3.1.244:2000	CCTV 4K[85][4K]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.245_2000	239.3.1.245:2000	CCTV 4K HDR[86][4K]	True	4K	3840x2160	HDR(10bit·reserved)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=reserved primaries=bt2020 field=- level=180	aac 2ch 48000Hz 260k	-	-	239.3.1.245_2000__CCTV_4K_HDR[86][4K].png
+239.3.1.247_2000	239.3.1.247:2000	总平台测试1	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.248_2000	239.3.1.248:2000	总平台测试2	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.249_8001	239.3.1.249:8001	北京IPTV 4K超清[40][4K]	True	4K	3840x2160	SDR(8bit·带bt2020-10标签但非10bit)	未知(字段缺失)	4K SDR	hevc Main 8bit 3840x2160 yuv420p transfer=bt2020-10 primaries=bt2020 field=- level=153	aac 2ch 48000Hz 131k	-	-	239.3.1.249_8001__北京IPTV_4K超清[40][4K].png
 239.3.1.24_8001	239.3.1.24:8001	证券服务	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=40	aac 2ch 48000Hz 130k	zhengquan	-	-
 239.3.1.250_8001	239.3.1.250:8001	北京IPTV淘电影[38][高清]	True	高清	1920x1080	SDR(8bit·bt709)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=progressive level=40	aac 2ch 44100Hz 130k	-	-	239.3.1.250_8001__北京IPTV淘电影[38][高清].png
+239.3.1.252_8001	239.3.1.252:8001	（未提供，见 service_name）	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
+239.3.1.253_8001	239.3.1.253:8001	轮播频道5	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.25_8001	239.3.1.25:8001	重温经典	True	高清	1920x1080	SDR(8bit·bt709)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=bt709 primaries=bt709 field=progressive level=40	aac 2ch 44100Hz 137k	-	-	-
 239.3.1.26_8108	239.3.1.26:8108	云南卫视[164][标清]	True	标清	720x576	SDR(8bit·未标注)	隔行(tt)	576i	h264 High 8bit 720x576 yuv420p transfer=- primaries=- field=tt level=30	mp2 2ch 48000Hz 96k	-	-	239.3.1.26_8108__云南卫视[164][标清].png
+239.3.1.27_2000	239.3.1.27:2000	广东卫视[超清HDR]	True	4K	3840x2160	HDR(10bit·reserved)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=reserved primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.27_2000__广东卫视[超清HDR].png
+239.3.1.28_2000	239.3.1.28:2000	深圳卫视[超清HDR]	True	4K	3840x2160	HDR(10bit·reserved)	未知(字段缺失)	4K HDR	hevc Main 10 10bit 3840x2160 yuv420p10le transfer=reserved primaries=bt2020 field=- level=180	aac 2ch 48000Hz 258k	-	-	239.3.1.28_2000__深圳卫视[超清HDR].png
 239.3.1.29_8288	239.3.1.29:8288	四川卫视[142][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	mp2 2ch 48000Hz 96k	-	Bravo	239.3.1.29_8288__四川卫视[142][标清].png
 239.3.1.39_8300	239.3.1.39:8300	广西卫视[152][标清]	True	标清	720x576	SDR(8bit·未标注)	隔行(tt)	576i	h264 High 8bit 720x576 yuv420p transfer=- primaries=- field=tt level=30	mp2 2ch 48000Hz 96k	-	-	239.3.1.39_8300__广西卫视[152][标清].png
 239.3.1.41_8140	239.3.1.41:8140	陕西卫视[154][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 Main 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	mp2 2ch 48000Hz 96k	-	Bravo	239.3.1.41_8140__陕西卫视[154][标清].png
@@ -130,6 +166,7 @@
 239.3.1.52_4120	239.3.1.52:4120	山东教育[139][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 High 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	mp2 2ch 48000Hz 128k	SDJY	-	239.3.1.52_4120__山东教育[139][标清].png
 239.3.1.53_9136	239.3.1.53:9136	财富天下[165][标清]	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.54_4120	239.3.1.54:4120	中国教育2台[172][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 High 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	mp2 2ch 48000Hz 128k	CETV2SD	-	239.3.1.54_4120__中国教育2台[172][标清].png
+239.3.1.55_4120	239.3.1.55:4120	CETV3	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.56_4120	239.3.1.56:4120	中国教育4台[174][标清]	True	标清	720x576	SDR(8bit·未标注)	逐行	标清	h264 High 8bit 720x576 yuv420p transfer=- primaries=- field=progressive level=30	mp2 2ch 48000Hz 128k	CETV4SD	-	239.3.1.56_4120__中国教育4台[174][标清].png
 239.3.1.57_8152	239.3.1.57:8152	中国教育1台[76][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	CETV1HD	-	239.3.1.57_8152__中国教育1台[76][高清].png
 239.3.1.58_8156	239.3.1.58:8156	金鹰纪实[77][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	JYJSHD	-	239.3.1.58_8156__金鹰纪实[77][高清].png
@@ -140,6 +177,7 @@
 239.3.1.63_8116	239.3.1.63:8116	CCTV-10科教[10][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.63_8116__CCTV-10科教[10][高清].png
 239.3.1.64_8124	239.3.1.64:8124	CCTV-12社会与法[12][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.64_8124__CCTV-12社会与法[12][高清].png
 239.3.1.65_8132	239.3.1.65:8132	CCTV-14少儿[14][高清]	True	高清	1920x1080	SDR(8bit·未标注)	隔行(tt)	1080i	h264 High 8bit 1920x1080 yuv420p transfer=- primaries=- field=tt level=41	mp2 2ch 48000Hz 256k	-	-	239.3.1.65_8132__CCTV-14少儿[14][高清].png
+239.3.1.66_8068	239.3.1.66:8068	熊猫频道	False	错误	-	错误	错误	错误	(无视频轨/探测失败)	-	-	-	-
 239.3.1.67_4120	239.3.1.67:4120	IPTV城市剧场[351][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.67_4120__IPTV城市剧场[351][高清].png
 239.3.1.68_4120	239.3.1.68:4120	IPTV军旅剧场[352][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.68_4120__IPTV军旅剧场[352][高清].png
 239.3.1.69_4120	239.3.1.69:4120	IPTV古装剧场[353][高清]	True	高清	1920x1080	SDR(8bit·未标注)	逐行	1080p	h264 Main 8bit 1920x1080 yuv420p transfer=- primaries=- field=progressive level=40	mp2 2ch 48000Hz 96k	-	-	239.3.1.69_4120__IPTV古装剧场[353][高清].png
