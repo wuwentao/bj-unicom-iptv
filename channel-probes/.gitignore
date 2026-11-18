@@ -1,0 +1,6 @@
+# transient batch-probe artifacts (not data)
+_done_keys.tmp
+_m3u_progress.log
+_m3u_summary.tsv
+_missing_summary.tsv
+_candidates_summary.tsv

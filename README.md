@@ -1,22 +1,29 @@
 # 1.北京联通IPTV播放列表
 
-## 节目源来源:
-[北京联通IPTV列表](https://gist.github.com/sdhzdmzzl/93cf74947770066743fff7c7f4fc5820)
-
-Author: [sdhzdmzzl](https://github.com/sdhzdmzzl)
-
 ## 节目源维护：
 节目源失效，新增，变化，可提交[issue](https://github.com/wuwentao/bj-unicom-iptv/issues/new)反馈变化
 或提交merge request,共同维护与更新准确的节目源列表
 
-- 频道有效性验证脚本：[check_iptv_m3u.sh](check_iptv_m3u.sh)，在北京联通局域网内用 ffmpeg/ffprobe 逐个探测频道、截图并生成报告（需先把 `rtp://` 转成 udpxy 的 `http://` 地址，依赖 `ffmpeg jq bc`）
+- 频道详细数据总表（实测分辨率/动态范围/扫描/编码/音频/EPG 等）：[channels.md](channels.md)
+- 维护脚本（探测/分类/生成）：[scripts/](scripts/)，其中 [scripts/check_iptv_m3u.sh](scripts/check_iptv_m3u.sh) 在北京联通局域网内用 ffmpeg/ffprobe 逐个探测频道、截图并生成报告（需先把 `rtp://` 转成 udpxy 的 `http://` 地址，依赖 `ffmpeg jq bc`）
+- 每个组播源的原始探测数据（ffmpeg/ffprobe）：[channel-probes/](channel-probes/)
 - 面向 AI 编码助手（Claude Code / Codex / Copilot / Cursor / Gemini CLI 等）的维护指南：[AGENTS.md](AGENTS.md)
 
 ## 节目源统计：
-***合计***：   158个
-- 高清： 117个
-- 4K:    16个
-- 标清：  25个
+当前 `bj-unicom-iptv.m3u` 共 **168** 个频道，按本地实测（经 udpxy 单播探测）分类。**一级按 4K / 高清 / 标清**，二级再细分（标清不细分）：
+
+| 一级分类 | 分辨率 | 二级分类 | 数量 | 一级合计 |
+| --- | --- | --- | --- | --- |
+| **4K** | 3840×2160 | 4K HDR（10bit·HLG/PQ） | 10 | **17** |
+| | | 4K SDR（8bit，含带 HLG 标签但非 10bit） | 7 | |
+| **高清** | 1920×1080 | 1080p（逐行） | 61 | **127** |
+| | | 1080i（隔行） | 65 | |
+| | | 高清（扫描未定，ffprobe 未给扫描字段） | 1 | |
+| **标清** | 720×576 | 标清（不细分） | 24 | **24** |
+| | | **合计** | | **168** |
+
+> 另有 5 个探测连通但无视频元数据的失效源，已从 m3u 移除，登记在 [channels.md §5.3](channels.md#53-失效已移除频道removed-list)（不计入 168）。
+> 显示名在 `[高清]` 后追加 `[1080p]`/`[1080i]` 标扫描，4K 用 `[4K SDR]`/`[4K HDR]`。画质/动态范围/扫描含义与 4K SDR/HDR 科普见 [channels.md 第 2 节](channels.md#2-基础知识科普先看这里)；命名与分组约定见 [channels.md 第 3 节](channels.md#3-命名与分组约定)。
 
 ## 主要修改
 * 重排序所有节目频道，按***画质+分类***排列
