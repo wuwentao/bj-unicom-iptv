@@ -51,7 +51,7 @@ def parse_m3u():
             g = lambda k: (re.search(rf'{k}="([^"]*)"', ext) or [None, ""])[1] if re.search(rf'{k}="([^"]*)"', ext) else ""
             chans.append(dict(addr=addr, num=ch_num, disp=disp, src=src,
                               group=g("group-title"), tvg_id=g("tvg-id"),
-                              tvg_name=g("tvg-name")))
+                              tvg_name=g("tvg-name"), tvg_logo=g("tvg-logo")))
             ext = None
     return chans
 
@@ -74,8 +74,8 @@ def main():
     chans = parse_m3u()
 
     header = ("| 编号 | 频道名称(显示名) | 统计分类 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 "
-              "| 组播地址 | 源 | group-title | service_name | provider | tvg-id | tvg-name | 验证 | 原始数据 |")
-    sep = "| --- " * 17 + "|"
+              "| 组播地址 | 源 | group-title | service_name | provider | tvg-id | tvg-name | tvg-logo | 验证 | 原始数据 |")
+    sep = "| --- " * 18 + "|"
 
     def sort_key(c):
         # 按编号升序；无编号排最后（仍保持 m3u 内相对顺序）
@@ -98,7 +98,7 @@ def main():
             f"| {short_video(p.get('video',''))} | {p.get('audio','')} "
             f"| `{c['addr']}` | {c['src']} | {c['group']} "
             f"| {p.get('service','')} | {p.get('provider','')} "
-            f"| {c['tvg_id']} | {c['tvg_name']} | {verify} | {probe} |"
+            f"| {c['tvg_id']} | {c['tvg_name']} | {('`'+c['tvg_logo']+'`') if c['tvg_logo'] else ''} | {verify} | {probe} |"
         )
         lines.append(row)
 

@@ -78,12 +78,20 @@ rtp://239.3.1.129:8008
 
 ### 3.4 `group-title` 分组规则
 
-- 格式为 `[画质]分类`，例如 `[高清]央视`、`[标清]卫视`。
-- 一个频道可属于**多个分组**，用英文分号 `;` 分隔，例如：
-  - `group-title="[高清]央视;少儿"`（CCTV-14 少儿，既在央视高清组也在少儿组）
-  - `group-title="[高清]北京;[高清]卫视"`（北京卫视，既是北京频道也是卫视）
-  - `group-title="[高清]卫视;4K"`（4K 卫视频道）
-- 当前出现过的分组（可能随维护变化，以文件实际内容为准）：`[高清]央视`、`[高清]卫视`、`[高清]北京`、`[高清]北京IPTV`、`[标清]卫视`、`[标清]北京`、`[标清]北京IPTV`、`4K`、`少儿` 等及其分号组合。
+`group-title` 由**两个维度**组合，用英文分号 `;` 可挂多个分组：
+
+- **维度一·画质前缀**：`[高清]` / `[标清]`（4K 频道的内容组仍带 `[高清]`，其 4K 身份由横切标签 `4K` 表达）。
+- **维度二·内容分类**：`央视` / `卫视` / `北京` / `北京IPTV`，以及**跨画质横切标签** `4K`、`少儿`。
+
+示例：
+
+- `group-title="[高清]央视;少儿"`（CCTV-14 少儿，既在央视高清组也在少儿组）
+- `group-title="[高清]北京;[高清]卫视"`（北京卫视，既是北京频道也是卫视）
+- `group-title="[高清]卫视;4K"`（4K 卫视频道：内容在高清卫视组，另进 4K 组）
+
+当前出现过的分组（可能随维护变化，以文件实际内容为准）：`[高清]央视`、`[高清]卫视`、`[高清]北京`、`[高清]北京IPTV`、`[标清]卫视`、`[标清]北京`、`[标清]北京IPTV`、`4K`、`少儿` 等及其分号组合。分组维度、各组计数与面向使用的分组选择建议详见 `channels.md §3.2`。
+
+> ⚠️ **强制匹配规则（必须满足，见 [3.5](#35-显示名命名规则) 末尾）**：频道的**实测画质**、**group-title 画质前缀/标签**、**显示名后缀** 三者必须一致，不得自相矛盾。
 
 ### 3.5 显示名命名规则
 
@@ -123,6 +131,22 @@ BRTV北京卫视SDR[81][4K]    → BRTV北京卫视[81][4K SDR]
 - `[1080p]`/`[1080i]`/`[4K SDR]`/`[4K HDR]` **由脚本按实测确定性算出**（见[第 11 节](#11-channelsmd-频道数据总表与探测体系)），不要手工臆断；`channels.md §5.2` 的「频道名称(建议显示名)」列即为改名目标值。
 - 判定依据（SDR/HDR 看**位深**，不看标签真伪）：10bit+HLG/PQ=HDR；8bit=SDR。科普见 `channels.md` 第 2 节。
 
+#### ⚠️ 强制匹配规则（分辨率 ↔ 分组 ↔ 后缀，必须满足）
+
+**每个频道的「实测分辨率/动态范围」「group-title 画质前缀/标签」「显示名后缀」三者必须一一对应，不得矛盾。** 新增或改动频道、重排序、补分组时都要据此核对；发现不符按实测为准改正。
+
+| 实测分类 | group-title 必须 | 显示名后缀必须 |
+| --- | --- | --- |
+| 1080p（1920×1080 逐行） | 含 `[高清]…`，**不含** `4K` | `[高清][1080p]` |
+| 1080i（1920×1080 隔行） | 含 `[高清]…`，**不含** `4K` | `[高清][1080i]` |
+| 高清（扫描未定） | 含 `[高清]…`，**不含** `4K` | `[高清]` |
+| 4K SDR（3840×2160·8bit） | 内容组带 `[高清]…` + 横切 `4K` 标签 | `[4K SDR]` |
+| 4K HDR（3840×2160·10bit） | 内容组带 `[高清]…` + 横切 `4K` 标签 | `[4K HDR]` |
+| 标清（720×576/560） | 含 `[标清]…` | `[标清]` |
+
+> 反例（本 PR 已修正）：`VBR测试-2[502]` 实测 1080p 却挂 `group-title="4K"` → 改为 `[高清]北京IPTV`。
+> 自检命令见 `channels.md §8.2`（`gen_table.py` + awk 校验），或[第 8 节](#8-常用核对与维护命令)。
+
 ### 3.6 组播地址
 
 - 全部位于 `239.3.x.x` 组播段（IPTV 专用）。
@@ -133,20 +157,20 @@ BRTV北京卫视SDR[81][4K]    → BRTV北京卫视[81][4K SDR]
 
 ## 4. 频道统计（当前快照）
 
-当前 `bj-unicom-iptv.m3u` 共 **173** 个频道。**按实测分类**（1080p/1080i/4K SDR/4K HDR/标清，见 `channels.md §5.1`）：
+当前 `bj-unicom-iptv.m3u` 共 **168** 个频道。统计**一级按 4K / 高清 / 标清**，二级再细分（标清不细分），见 `channels.md §5.1`：
 
-| 分类 | 数量 |
-| --- | --- |
-| 1080p（高清·逐行） | 61 |
-| 1080i（高清·隔行） | 65 |
-| 高清（扫描未定） | 1 |
-| 4K SDR（8bit） | 7 |
-| 4K HDR（10bit） | 10 |
-| 标清 | 24 |
-| 失效/无视频元数据 | 5 |
-| **合计** | **173** |
+| 一级分类 | 分辨率 | 二级分类 | 数量 | 一级合计 |
+| --- | --- | --- | --- | --- |
+| **4K** | 3840×2160 | 4K HDR（10bit） | 10 | **17** |
+| | | 4K SDR（8bit） | 7 | |
+| **高清** | 1920×1080 | 1080p（逐行） | 61 | **127** |
+| | | 1080i（隔行） | 65 | |
+| | | 高清（扫描未定） | 1 | |
+| **标清** | 720×576 | 标清（不细分） | 24 | **24** |
+| | | **合计** | | **168** |
 
-> 分组小计：高清 127、4K 17、标清 24。显示名在 `[高清]` 后追加 `[1080p]`/`[1080i]`，4K 用 `[4K SDR]`/`[4K HDR]`。
+> 另有 5 个探测连通但无视频元数据的失效源，**已从 m3u 移除**，登记在 `channels.md §5.3`（不计入 168）。
+> 显示名在 `[高清]` 后追加 `[1080p]`/`[1080i]`，4K 用 `[4K SDR]`/`[4K HDR]`。
 > 修改 m3u 后请同步更新 README 与 `channels.md`（重跑 `scripts/build_summary.py` + `scripts/gen_table.py`）。不要以 README 旧值为准，始终以脚本核对的实际值为准。
 
 ---
@@ -268,6 +292,14 @@ awk '/^#EXTINF/{if(p=="e")print "ERR dup EXTINF @"NR; p="e"; next}
 
 # 找出缺少 EPG 元数据（tvg-id 为空）的频道
 grep -n 'tvg-id=""' bj-unicom-iptv.m3u
+
+# 强制匹配规则自检（§3.5）：分辨率 ↔ group-title ↔ 显示名后缀 三者一致
+python3 scripts/gen_table.py   # → /tmp/channels_table.md
+awk -F'|' 'NR>2 && NF>3{cat=$4;grp=$12;gsub(/^ +| +$/,"",cat);gsub(/^ +| +$/,"",grp);
+  if(grp~/4K/ && cat!~/^4K/) print "ERR 非4K挂4K组: "$2;
+  if(cat~/^4K/ && grp!~/4K/) print "ERR 4K缺4K标签: "$2;
+  if(cat~/1080|高清/ && (grp!~/\[高清\]/||grp~/4K/)) print "ERR 高清分组不符: "$2;
+  if(cat=="标清" && grp!~/\[标清\]/) print "ERR 标清分组不符: "$2}' /tmp/channels_table.md
 ```
 
 **改动 m3u 后的自检清单：**
@@ -276,6 +308,7 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 2. awk 结构校验无 `ERR` 输出。
 3. 画质统计与 README 一致（如有变化同步更新 README）。
 4. 新增/改动频道的 `[编号]`、`group-title`、画质标识、组播地址彼此对应无误。
+5. **强制匹配规则自检**（上方 awk）无 `ERR`：实测分辨率 ↔ group-title ↔ 显示名后缀三者一致（见 [3.5](#35-显示名命名规则)）。
 
 ---
 
@@ -285,7 +318,7 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 
 - **README 统计可能过时**：历史上写过 `213/116/13/25`，与实际不符。以第 4 节与第 8 节脚本核对值为准。
 - **验证脚本输入文件名不一致**：`scripts/check_iptv_m3u.sh` 硬编码 `M3U_FILE="iptv.m3u"`，仓库列表名为 `bj-unicom-iptv.m3u`。使用时需手工复制/改名（见 6.2），或改脚本。
-- **失效/待复核频道**：`channels.md §5.3` 维护了一份 removed list（探测连通但无视频元数据的源），其中 `CCTV 4K[85]`、`广东卫视4K[406]`、`深圳卫视4K[408]` 的现有 `*:2000` 源已失效（后两者有可用新源 `239.3.1.27/28:2000`）。确认长期失效的可从 m3u 移除并在该表登记。
+- **失效源处理流程（标准操作）**：探测连通但 `ffprobe` 读不到视频元数据的源，**从 `bj-unicom-iptv.m3u` 移除**，并在 `channels.md §5.3` removed list 登记（保留组播地址、移除前名称、原始数据链接），供日后复测；若换时段 `./scripts/probe-and-record.sh <addr>` 恢复，再加回 m3u。本 PR 已据此移除 5 个源（`CCTV 4K[85]`、`家有购物精选[30]`、`时尚购物[33]`、`湖南卫视茶频道[321]`、`财富天下[165]`）。`广东卫视4K[406]`/`深圳卫视4K[408]` 的旧 `*:2000` 源已换为活源 `239.3.1.27/28:2000`。
 - **CI 工作流指向错误分支且仍是模板**：`.github/workflows/ci.yml` 的 `on.push` / `on.pull_request` 监听 `master`，而仓库默认分支是 `main`，因此实际从不触发；且内容只是 `echo Hello, world!` 占位，没有真正的校验逻辑。
 - **部分频道缺 EPG 元数据**：约有数十条 `tvg-id=""`/`tvg-name=""`/`tvg-logo=""`，这些频道在支持 EPG 的播放器里不显示节目单和台标。补全需从 EPG 源查到对应 id。
 - **文件末尾无换行符**：`bj-unicom-iptv.m3u` 最后一行没有结尾换行，追加内容时注意先补一个换行再追加。
@@ -312,7 +345,7 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 
 `channels.md` + `channel-probes/` + `scripts/` 构成一套**确定性**的频道实测数据体系。核心原则：**能用固定脚本确定性算出的，一律脚本算，不靠 AI/人工臆断**；只有「看台标认频道名」「定 group-title」才需人工。
 
-### 12.1 组成
+### 11.1 组成
 
 | 部分 | 作用 |
 | --- | --- |
@@ -320,11 +353,11 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 | `scripts/probe-all-m3u.sh` | 批量：解析 m3u 逐个调用上面脚本，可断点续跑。 |
 | `scripts/iptv_classify.py` | **共享分类逻辑**（与 bash `classify()` 规则一致）：从 ffprobe JSON 算出 cat/name_suffix 等。改判定规则**只改这里 + bash classify()**，保持两者同步。 |
 | `scripts/build_summary.py` | 读 `channel-probes/*.md` 内嵌 JSON → 重建合并摘要 `channel-probes/_all_summary.tsv`。 |
-| `scripts/gen_table.py` | 合并 m3u 元数据 + 摘要 TSV → 生成 `channels.md §5.2` 总表；内含人工确认区 `EXTRA`/`NUM_OVERRIDE`/`NAME_OVERRIDE`。 |
+| `scripts/gen_table.py` | 合并 m3u 元数据 + 摘要 TSV → 生成 `channels.md §5.2` 总表（18 列，按 IPTV 编号排序）。**以 m3u 为最终真源**，不含 override 区。 |
 | `scripts/regen_probe_tables.py` | 术语/规则变更后，从已存 JSON **重算**所有 `channel-probes/*.md` 判定表，**不重新探测**。 |
 | `channel-probes/<ip>_<port>.md` | 单个组播地址的探测历史，新记录追加在末尾，**以最新一条为准**；换频道不换地址→同文件追加，换地址→新文件。 |
 
-### 12.2 确定性判定规则（务必与脚本一致）
+### 11.2 确定性判定规则（务必与脚本一致）
 
 - **位深**：`pix_fmt` 含 `10le/10be/p010/10`→10bit，含 `12`→12bit，否则 8bit。
 - **画质**：1920×1080→高清；3840×2160→4K；720×576/560→标清；其他→其它(WxH)。
@@ -332,16 +365,16 @@ grep -n 'tvg-id=""' bj-unicom-iptv.m3u
 - **扫描**：`field_order=tt/bb/tb/bt`→隔行(i)；`progressive`→逐行(p)；空→未知。
 - **显示名后缀**：高清→`[高清][1080p]`/`[高清][1080i]`/`[高清]`；4K→`[4K SDR]`/`[4K HDR]`；标清→`[标清]`（规则同[第 3.5 节](#35-显示名命名规则)）。
 
-### 12.3 格式要求（防止后续 AGENT 改错）
+### 11.3 格式要求（防止后续 AGENT 改错）
 
-- **`channels.md §5.2` 每行 17 列**，表头固定为：`编号 | 频道名称(建议显示名) | 统计分类 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 | 组播地址 | 源 | 现 group-title | service_name | provider | tvg-id | tvg-name | 验证 | 原始数据`。**不要手改表体**——改数据改源头（probe 记录 / `gen_table.py` 的 override 区），然后重跑生成。
-- **生成链路（改完任一环节按序重跑）**：`probe-and-record.sh`（新/变更源）→ `regen_probe_tables.py`（若改了分类规则）→ `build_summary.py` → `gen_table.py` → 把 `/tmp/channels_table.md` 并入 `channels.md §5.2`。
+- **`channels.md §5.2` 每行 18 列**，表头固定为：`编号 | 频道名称(显示名) | 统计分类 | 分辨率 | 动态范围 | 扫描 | 视频编码 | 音频 | 组播地址 | 源 | group-title | service_name | provider | tvg-id | tvg-name | tvg-logo | 验证 | 原始数据`（`tvg-logo` 在 `tvg-name` 之后，便于直接复制生成 m3u）。**不要手改表体**——改数据改源头（probe 记录 / m3u），然后重跑 `gen_table.py` 生成。
+- **生成链路（改完任一环节按序重跑）**：`probe-and-record.sh`（新/变更源）→ `regen_probe_tables.py`（若改了分类规则）→ `build_summary.py` → `gen_table.py` → 把 `/tmp/channels_table.md` 并入 `channels.md §5.2`。完整分步流程与「每个脚本在哪一步、解决什么」见 `channels.md §7`。
 - **脚本路径无关 cwd**：Python 脚本用 `__file__` 定位仓库根，bash 用 `ROOT_DIR="$SCRIPT_DIR/.."`；新增脚本请沿用，别写死相对路径。
 - **瞬时产物**（`_m3u_summary.tsv`/`_done_keys.tmp`/`_m3u_progress.log`/`_candidates_summary.tsv`）已在 `channel-probes/.gitignore` 忽略；**保留并提交** `_all_summary.tsv` 与各 `<ip>_<port>.md`。
 - **原始数据只增不改**：`channel-probes/*.md` 里的 ffmpeg banner + ffprobe JSON 是实测存档，复测用脚本**追加**新记录，不要手工编辑或删除历史。
 - **依赖**：`ffmpeg`/`ffprobe`/`jq`（Ubuntu `apt install ffmpeg jq`）。探测必须在**能访问北京联通组播的局域网**内跑。
 
-### 12.4 什么该脚本、什么该人工
+### 11.4 什么该脚本、什么该人工
 
 | 字段 | 来源 |
 | --- | --- |

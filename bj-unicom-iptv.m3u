@@ -57,7 +57,7 @@ rtp://239.3.1.117:8000
 rtp://239.3.1.189:8000
 #EXTINF:-1 tvg-id="1880" tvg-name="BTV新闻" tvg-logo="http://epg.51zmt.top:8000/tb1/sheng/BTV新闻.png" group-title="[高清]北京",BRTV新闻[29][高清][1080p]
 rtp://239.3.1.159:8000
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="北京",BRTV国际频道[131][高清][1080p]
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",BRTV国际频道[131][高清][1080p]
 rtp://239.3.1.235:8000
 #EXTINF:-1 tvg-id="27" tvg-name="湖南卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/hunan.png" group-title="[高清]卫视",湖南卫视[41][高清][1080i]
 rtp://239.3.1.132:8012
@@ -125,8 +125,6 @@ rtp://239.3.1.22:8001
 rtp://239.3.1.118:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV;4K",北京IPTV[40][4K SDR]
 rtp://239.3.1.249:8001
-#EXTINF:-1 tvg-id="106" tvg-name="CCTV4K" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV4k.png" group-title="[高清]央视;[高清]北京IPTV;4K",CCTV 4K[85][4K]
-rtp://239.3.1.244:2000
 #EXTINF:-1 tvg-id="106" tvg-name="CCTV4K" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV4k.png" group-title="[高清]央视;[高清]北京IPTV;4K",CCTV 4K[86][4K HDR]
 rtp://239.3.1.245:2000
 #EXTINF:-1 tvg-id="7249" tvg-name="CCTV16" tvg-logo="http://epg.51zmt.top:8000/tb1/CCTV/CCTV16.png" group-title="[高清]央视;4K",CCTV16奥林匹克4K源1[4K SDR]
@@ -155,7 +153,7 @@ rtp://239.3.1.144:3005
 rtp://239.3.1.131:3001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="4K",VBR测试-1[515][4K SDR]
 rtp://239.3.1.139:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="4K",VBR测试-2[502][高清][1080p]
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",VBR测试-2[502][高清][1080p]
 rtp://239.3.1.140:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京",朝阳融媒[高清][1080i]
 rtp://239.3.1.163:8001
@@ -177,12 +175,8 @@ rtp://239.3.1.179:8001
 rtp://239.3.1.160:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",央广购物[20][高清][1080i]
 rtp://239.3.1.222:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",家有购物精选[30][高清]
-rtp://239.3.1.186:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",优购物[32][高清][1080p]
 rtp://239.3.1.180:8001
-#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",时尚购物[33][高清]
-rtp://239.3.1.181:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",家有购物[42][高清][1080p]
 rtp://239.3.1.185:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",央广购物精选[43][高清][1080i]
@@ -213,8 +207,6 @@ rtp://239.3.1.24:8001
 rtp://239.3.1.25:8001
 #EXTINF:-1 tvg-id="6595" tvg-name="快乐垂钓" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/KUAILECHUIDIAO.jpg" group-title="[高清]北京IPTV",四海钓鱼[320][高清][1080i]
 rtp://239.3.1.164:8001
-#EXTINF:-1 tvg-id="6585" tvg-name="茶频道" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/DOCUMENTARY-CHANNEL.jpg" group-title="[高清]北京IPTV",湖南卫视茶频道[321][高清]
-rtp://239.3.1.165:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",中国天气[322][高清][1080i]
 rtp://239.3.1.108:8001
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" group-title="[高清]北京IPTV",环球旅游[323][高清][1080i]
@@ -335,12 +327,10 @@ rtp://239.3.1.155:4120
 rtp://239.3.1.26:8108
 #EXTINF:-1 tvg-id="68" tvg-name="厦门卫视" tvg-logo="http://epg.51zmt.top:8000/tb1/ws/xiamen.png" group-title="[标清]卫视",厦门卫视[166][标清]
 rtp://239.3.1.143:4120
-#EXTINF:-1 tvg-id="69" tvg-name="金鹰卡通" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/jinyingkatong.png" group-title="北京IPTV;少儿",金鹰卡通[169][标清]
+#EXTINF:-1 tvg-id="69" tvg-name="金鹰卡通" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/jinyingkatong.png" group-title="[标清]北京IPTV;少儿",金鹰卡通[169][标清]
 rtp://239.3.1.51:9252
 #EXTINF:-1 tvg-id="6010" tvg-name="嘉佳卡通" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/jiajiakt.png" group-title="[标清]北京IPTV;少儿",嘉佳卡通[170][标清]
 rtp://239.3.1.147:9268
-#EXTINF:-1 tvg-id="6623" tvg-name="财富天下" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/财富天下.png" group-title="[标清]北京IPTV",财富天下[165][标清]
-rtp://239.3.1.53:9136
 #EXTINF:-1 tvg-id="74" tvg-name="" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/中国教育2台.png" group-title="[标清]北京IPTV",中国教育2台[172][标清]
 rtp://239.3.1.54:4120
 #EXTINF:-1 tvg-id="7245" tvg-name="" tvg-logo="http://epg.51zmt.top:8000/tb1/qt/中国教育4台.png" group-title="[标清]北京IPTV",中国教育4台[174][标清]
